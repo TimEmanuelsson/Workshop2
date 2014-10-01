@@ -1,16 +1,16 @@
 <?php
 
-require_once ('./model/Member.php');
-require_once ('./model/Repository.php');
+require_once ('Member.php');
+require_once ('Repository.php');
 
 class MemberRepository extends Repository {
 
-	private static $id = 'ID';
-	private static $firstName = 'firstName';
-	private static $lastName = 'lastName';
-	private static $identityNumber = 'identityNumber';
+	public static $id = 'ID';
+	public static $firstName = 'firstName';
+	public static $lastName = 'lastName';
+	public static $identityNumber = 'identityNumber';
 	
-	private static $dbTable = 'member';
+	public static $dbTable = 'member';
 	
 
 	public function __construct() {
@@ -51,7 +51,7 @@ class MemberRepository extends Repository {
 				$boats = $query->fetchAll();
 				foreach($boats as $boat) {
 					$bt = new Boat($boat[BoatRepository::$id], $boat[BoatRepository::$boatTypeID], $boat[BoatRepository::$memberID], $boat[BoatRepository::$length]);
-					//$member->add($bt);
+					$member->addBoat($bt);
 				}
 				return $member;
 			}
