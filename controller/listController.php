@@ -1,15 +1,16 @@
 <?php
-require_once('../model/MemberRepository');
-require_once('../model/BoatRepository');
-require_once('../view/listView.php');
 
-class listController
+require_once('./model/MemberRepository.php');
+require_once('./model/BoatRepository.php');
+require_once('./view/listView.php');
+
+class ListController
 {
 	private $listView;
 	private $memberRepository;
 	private $boatRepository;
 	
-	private function __construct()
+	public function __construct()
 	{
 		$this->memberRepository = new MemberRepository();
 		$this->boatRepository = new BoatRepository();
@@ -22,11 +23,11 @@ class listController
 		// Visar den detaljerade listan.
 		if($this->listView->didUserPressDetailedList() == TRUE)
 		{
-			$this->listView->showDetailedList();
+			return $this->listView->showDetailedList();
 		}
 		else
 		{
-			$this->listView->showCompactList();
+			return $this->listView->showCompactList();
 		}
 	}
 }

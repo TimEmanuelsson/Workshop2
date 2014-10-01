@@ -1,8 +1,7 @@
 <?php
 
-require_once('model/MemberRepository.php');
-require_once ('model/BoatRepository.php');
 require_once ('view/HTMLView.php');
+require_once ('controller/ListController.php');
 
 $lc = new ListController();
 $HTMLBody = $lc->showList();

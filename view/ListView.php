@@ -4,7 +4,7 @@ Class ListView {
 	private $memberRepository;
 	private $boatRepository;
 	
-	public function __contruct(MemberRepository $memberRepository, BoatRepository $boatRepository){
+	public function __construct(MemberRepository $memberRepository, BoatRepository $boatRepository){
 		$this->memberRepository = $memberRepository;
 		$this->boatRepository = $boatRepository;
 	}
@@ -18,25 +18,26 @@ Class ListView {
 	}
 	
 	public function getList(){
-		return $list = $this->memberRepository->getAllMembersAndBoats();
+		return $this->memberRepository->getAllMembersAndBoats();
 	}
 	
 	public function showCompactList(){
 		$allMembersAndBoats = $this->getList();
+		$contentString = "";
 		
 		foreach ($allMembersAndBoats as $memberAndBoats) {
-			$contentString ="
-			<li><a href=''>" . $memberAndBoats[1] + " " + $memberAndBoats[2] . "</a> Medlemmsnummer: $memberAndBoats[0]<li>
+			$contentString .="
+			<li><a href=''>" . utf8_encode($memberAndBoats->getFirstName()) . " " . utf8_encode($memberAndBoats->getLastName()) . "</a> Medlemsnummer: " . $memberAndBoats->getID() . "</li>
 			";
 		}
-		
-		$ret = '';
 		
 		$ret = "
 				<h1>Compact List</h1>
 				<ul>$contentString</ul>
 		
 		";
+		
+		return $ret;
 	}
 	
 	public function showDetailedList(){
