@@ -1,11 +1,10 @@
 <?php
 
 abstract class Repository {
-	protected $dbUsername = '';
-	protected $dbPassword = '';
-	protected $dbConnstring = '';
+	protected $dbUsername = 'dannberger_com';
+	protected $dbPassword = 'BEAtWKgA';
+	protected $dbConnstring = 'mysql:host=dannberger.com.mysql;dbname=dannberger_com';
 	protected $dbConnection;
-	protected $dbTable;
 	
 	protected function connection() {
 		if ($this->dbConnection == NULL) {
