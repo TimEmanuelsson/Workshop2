@@ -2,13 +2,10 @@
 
 require_once('model/MemberRepository.php');
 require_once ('model/BoatRepository.php');
+require_once ('view/HTMLView.php');
 
-$memberRepo = new MemberRepository();
+$lc = new ListController();
+$HTMLBody = $lc->showList();
 
-$members = $memberRepo->getAllMembersAndBoats();
-
-
-
-foreach ($members as $member) {
-	var_dump($member);
-}
+$view = new HTMLView();
+$view->echoHTML($HTMLBody);
