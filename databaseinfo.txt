@@ -1,0 +1,9 @@
+PhpMyAdmin: https://dbadmin.one.com
+
+Host: dannberger.com.mysql
+
+Database: dannberger_com
+
+Username: dannberger_com
+
+Password: BEAtWKgA
