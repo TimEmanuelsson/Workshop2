@@ -4,12 +4,12 @@ require_once ('Boat.php');
 
 class BoatRepository extends Repository {
 	
-	private static $id = 'ID';
-	private static $boatTypeID = 'boatTypeID';
-	private static $memberID = 'memberID';
-	private static $length = 'length';
+	public static $id = 'ID';
+	public static $boatTypeID = 'boatTypeID';
+	public static $memberID = 'memberID';
+	public static $length = 'length';
 	
-	private static $dbTable = 'Boat';
+	public static $dbTable = 'boat';
 	
 	
 }

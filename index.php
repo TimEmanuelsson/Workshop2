@@ -7,6 +7,8 @@ $memberRepo = new MemberRepository();
 
 $members = $memberRepo->getAllMembersAndBoats();
 
+
+
 foreach ($members as $member) {
 	var_dump($member);
 }

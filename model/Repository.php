@@ -1,9 +1,9 @@
 <?php
 
 abstract class Repository {
-	protected $dbUsername = 'dannberger_com';
-	protected $dbPassword = 'BEAtWKgA';
-	protected $dbConnstring = 'mysql:host=dannberger.com.mysql;dbname=dannberger_com';
+	protected $dbUsername = 'root';
+	protected $dbPassword = '';
+	protected $dbConnstring = 'mysql:host=localhost;dbname=dannberger_com';
 	protected $dbConnection;
 	
 	protected function connection() {

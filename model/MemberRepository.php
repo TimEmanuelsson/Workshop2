@@ -10,7 +10,7 @@ class MemberRepository extends Repository {
 	private static $lastName = 'lastName';
 	private static $identityNumber = 'identityNumber';
 	
-	private static $dbTable = 'Member';
+	private static $dbTable = 'member';
 	
 
 	public function __construct() {
@@ -20,7 +20,7 @@ class MemberRepository extends Repository {
 		try {
 			$db = $this -> connection();
 
-			$sql = "INSERT INTO $this->dbTable (" . self::$firstName . ", " . self::$lastName . ", " . self::$identityNumber . ") VALUES (?, ?, ?)";
+			$sql = "INSERT INTO " . self::$dbTable . " (" . self::$firstName . ", " . self::$lastName . ", " . self::$identityNumber . ") VALUES (?, ?, ?)";
 			$params = array($member -> getFirstName(), $member -> getLastName(), $member -> getIdentityNumber());
 
 			$query = $db -> prepare($sql);
@@ -35,7 +35,7 @@ class MemberRepository extends Repository {
 		try {
 			$db = $this -> connection();
 
-			$sql = "SELECT * FROM $this->dbTable WHERE " . self::$id . " = ?";
+			$sql = "SELECT * FROM " . self::$dbTable . " WHERE " . self::$id . " = ?";
 			$params = array($id);
 
 			$query = $db -> prepare($sql);
@@ -51,7 +51,7 @@ class MemberRepository extends Repository {
 				$boats = $query->fetchAll();
 				foreach($boats as $boat) {
 					$bt = new Boat($boat[BoatRepository::$id], $boat[BoatRepository::$boatTypeID], $boat[BoatRepository::$memberID], $boat[BoatRepository::$length]);
-					$member->add($bt);
+					//$member->add($bt);
 				}
 				return $member;
 			}
@@ -88,7 +88,7 @@ class MemberRepository extends Repository {
 		try {
 			$db = $this -> connection();
 
-			$sql = "DELETE FROM $this->dbTable WHERE " . self::$id . " = ?";
+			$sql = "DELETE FROM " . self::$dbTable . " WHERE " . self::$id . " = ?";
 			$params = array($member -> getId());
 
 			$query = $db -> prepare($sql);
@@ -132,13 +132,13 @@ class MemberRepository extends Repository {
 			
 			$allMembersAndBoats = array();
 			
-			$sql = "SELECT " . self::$id . " FROM $this->dbTable";
+			$sql = "SELECT " . self::$id . " FROM " . self::$dbTable;
 			$query = $db -> prepare($sql);
 			$query -> execute();
 			$result = $query->fetchAll();
 			
 			foreach($result as $id) {
-				$memberAndBoats = $this->getMemberAndBoats($id);
+				$memberAndBoats = $this->getMemberAndBoats($id['ID']);
 				$allMembersAndBoats[] = $memberAndBoats;
 			}
 			

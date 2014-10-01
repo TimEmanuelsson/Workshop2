@@ -9,7 +9,7 @@ class Member {
 	public function __construct($id, $firstName, $lastName, $identityNumber) {
 		$this->id = $id;
 		$this->firstName = $firstName;
-		$this->lastname = $lastName;
+		$this->lastName = $lastName;
 		$this->identityNumber = $identityNumber;
 	}
 	
