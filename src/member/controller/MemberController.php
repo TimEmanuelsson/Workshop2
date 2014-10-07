@@ -2,7 +2,7 @@
 
 require_once ('./src/member/view/MemberView.php');
 require_once('./src/boat/model/BoatRepository.php');
-require_once('./src/list/view/ListView.php');
+require_once('./src/member/model/MemberRepository.php');
 
 Class MemberController {
 
@@ -15,6 +15,4 @@ Class MemberController {
 		$this->boatRepository = new BoatRepository();
 		$this->memberView = new MemberView($this->memberRepository, $this->boatRepository);
 	}
-
-
 }
