@@ -18,7 +18,7 @@ class NavigationController
 					case NavigationView::$actionMember:
 						
 						$controller = new MemberController();
-						
+						return $controller->showMember();
 						break;
 						
 					case NavigationView::$actionBoat:

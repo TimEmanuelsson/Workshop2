@@ -10,9 +10,19 @@ Class MemberController {
 	private $memberRepository;
 	private $boatRepository;
 
-	public function __construct() {
+	public function __construct()
+	{
 		$this->memberRepository = new MemberRepository();
 		$this->boatRepository = new BoatRepository();
 		$this->memberView = new MemberView($this->memberRepository, $this->boatRepository);
 	}
+	
+	public function showMember()
+	{
+		$memberID = $this->memberView->getMemberID();
+		$member = $this->memberRepository->getMemberAndBoats($memberID);
+		return $this->memberView->showMember($member);
+	}
+	
+	// TODO: LÄGG TILL editMember()-funktion.
 }
