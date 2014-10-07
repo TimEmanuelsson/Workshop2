@@ -33,7 +33,9 @@ Class ListView {
 		
 		$ret = "
 				<h1>Compact List</h1>
+				<a href='?DetailedList'>Show Detailed List</a>
 				<ul>$contentString</ul>
+				
 		
 		";
 		
@@ -41,6 +43,21 @@ Class ListView {
 	}
 	
 	public function showDetailedList(){
+		$allMembersAndBoatDetailed = $this->getList();
+		$contentString = "";
 		
+		foreach ($allMembersAndBoatDetailed as $memberAndBoats) {
+			$contentString .="
+			<li><a href=''>" . utf8_encode($memberAndBoats->getFirstName()) . " " . utf8_encode($memberAndBoats->getLastName()) . "</a> Medlemsnummer: " . $memberAndBoats->getID() . "</li>
+			";
+		}
+
+		$ret = "
+				<h1>Detailed List</h1>
+				<a href='?CompactList'>Show Compact List</a>
+				<ul>$contentString</ul>
+		";
+
+		return ret;
 	}
 }
