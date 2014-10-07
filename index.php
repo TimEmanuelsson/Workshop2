@@ -1,10 +1,11 @@
 <?php
 
 require_once ('src/navigation/view/HTMLView.php');
-require_once ('src/list/controller/ListController.php');
+require_once ('src/navigation/controller/NavigationController.php');
 
-$lc = new ListController();
-$HTMLBody = $lc->showList();
+$nc = new NavigationController();
+$HTMLBody = $nc->doNavigation();
+
 
 $view = new HTMLView();
 $view->echoHTML($HTMLBody);

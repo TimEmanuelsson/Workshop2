@@ -10,7 +10,7 @@ Class ListView {
 	}
 	
 	public function didUserPressDetailedList(){
-		if(isset($_POST['detailedButton']) && $_POST['detailedButton'] == TRUE){
+		if(isset($_GET['DetailedList']) == TRUE){
 			return TRUE;
 		}
 		
@@ -27,7 +27,7 @@ Class ListView {
 		
 		foreach ($allMembersAndBoats as $memberAndBoats) {
 			$contentString .="
-			<li><a href=''>" . utf8_encode($memberAndBoats->getFirstName()) . " " . utf8_encode($memberAndBoats->getLastName()) . "</a> Medlemsnummer: " . $memberAndBoats->getID() . "</li>
+			<li><a href='?member=" . $memberAndBoats->getID() . "'>" . utf8_encode($memberAndBoats->getFirstName()) . " " . utf8_encode($memberAndBoats->getLastName()) . "</a> Medlemsnummer: " . $memberAndBoats->getID() . "</li>
 			";
 		}
 		
@@ -46,9 +46,9 @@ Class ListView {
 		$allMembersAndBoatDetailed = $this->getList();
 		$contentString = "";
 		
-		foreach ($allMembersAndBoatDetailed as $memberAndBoats) {
+		foreach ($allMembersAndBoatDetailed as $detailedlist) {
 			$contentString .="
-			<li><a href=''>" . utf8_encode($memberAndBoats->getFirstName()) . " " . utf8_encode($memberAndBoats->getLastName()) . "</a> Medlemsnummer: " . $memberAndBoats->getID() . "</li>
+			<li><a href=''>" . utf8_encode($detailedlist->getFirstName()) . " " . utf8_encode($detailedlist->getLastName()) . "</a> " . $detailedlist->getIdentityNumber() . " Medlemsnummer: " . $detailedlist->getID() . "</li>
 			";
 		}
 
@@ -58,6 +58,6 @@ Class ListView {
 				<ul>$contentString</ul>
 		";
 
-		return ret;
+		return $ret;
 	}
 }
