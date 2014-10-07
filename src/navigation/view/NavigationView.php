@@ -2,9 +2,9 @@
 
 class NavigationView
 {
-	private static $actionList = 'list';
-	private static $actionMember = 'member';
-	private static $actionBoat = 'boat';
+	public static $actionList = 'list';
+	public static $actionMember = 'member';
+	public static $actionBoat = 'boat';
 	
 	public static function getAction()
 	{

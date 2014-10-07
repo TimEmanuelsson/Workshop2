@@ -1,6 +1,7 @@
 <?php
 
 require_once('Boat.php');
+require_once ('./src/navigation/model/Repository.php');
 
 class BoatRepository extends Repository {
 	
