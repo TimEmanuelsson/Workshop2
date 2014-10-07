@@ -1,7 +1,7 @@
 <?php
 
 require_once ('Member.php');
-require_once ('Repository.php');
+require_once ('./src/navigation/model/Repository.php');
 
 class MemberRepository extends Repository {
 

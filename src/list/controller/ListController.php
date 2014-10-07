@@ -1,8 +1,8 @@
 <?php
 
-require_once('./model/MemberRepository.php');
-require_once('./model/BoatRepository.php');
-require_once('./view/listView.php');
+require_once('./src/member/model/MemberRepository.php');
+require_once('./src/boat/model/BoatRepository.php');
+require_once('./src/list/view/ListView.php');
 
 class ListController
 {

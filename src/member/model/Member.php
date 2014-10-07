@@ -1,5 +1,5 @@
 <?php
-require_once('Exceptions/ValidationException.php');
+require_once('./src/exceptions/ValidationException.php');
 
 class Member {
 	private $id;
