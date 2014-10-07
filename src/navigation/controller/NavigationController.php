@@ -23,7 +23,7 @@ class NavigationController
 						
 					case NavigationView::$actionBoat:
 						
-						$controller = new BoatController();
+						//$controller = new BoatController();
 						
 						break;
 						
@@ -31,6 +31,7 @@ class NavigationController
 					default:
 						
 						$controller = new ListController();
+						return $controller->showList();
 						
 						break;
 					
