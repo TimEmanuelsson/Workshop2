@@ -2,6 +2,7 @@
 
 require_once('Boat.php');
 require_once ('./src/navigation/model/Repository.php');
+require_once('./src/boat/model/BoatTypeRepository.php');
 
 class BoatRepository extends Repository {
 	
@@ -11,6 +12,12 @@ class BoatRepository extends Repository {
 	public static $length = 'length';
 	
 	public static $dbTable = 'boat';
+	
+	private $boatTypeRepository;
+	
+	public function __construct() {
+		$this->boatTypeRepository = new BoatTypeRepository();
+	}
 	
 	public function getBoatsByMember($memberID) {
 		$db = $this -> connection();
@@ -25,6 +32,7 @@ class BoatRepository extends Repository {
 			$result = $query -> fetchAll();
 			
 			foreach($result as $boat) {
+				$boatType = $this->boatTypeRepository->getBoatTypeByID($boat[self::$boatTypeID]);
 				$bt = new Boat($boat[self::$id], $boat[self::$boatTypeID], $boat[self::$memberID], $boat[self::$length]);
 				$boats[] = $bt;
 			}
