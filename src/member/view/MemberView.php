@@ -28,7 +28,7 @@ Class MemberView {
 			<ul>
 				";
 		
-		if(count($member->getBoats() <= 0) && $member->getBoats != NULL)
+		if(count($member->getBoats()) <= 0 || $member->getBoats() == NULL)
 		{
 			$contentString .= "<li>" . utf8_encode($member->getFirstName()) . " does not have any registered boats</li>";
 		}
@@ -36,7 +36,7 @@ Class MemberView {
 		{
 			foreach ($member->getBoats() as $boat)
 			{
-				$contentString .= "<li>Boat type: " . $boat-getBoatType() . " Boat length: " . $boat->getLength() . "</li>";
+				$contentString .= "<li>Boat type: " . utf8_encode($boat->getBoatType()) . ". Boat length: " . $boat->getLength() . "</li>";
 			}
 		}
 		

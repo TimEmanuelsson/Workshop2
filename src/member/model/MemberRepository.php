@@ -47,9 +47,8 @@ class MemberRepository extends Repository {
 			$result = $query -> fetch();
 
 			if ($result) {
-				$member = new Member($result[self::$id], $result[self::$firstName], $result[self::$lastName], $result[self::$identityNumber]);
-				
-				$this->boatRepository->getBoatsByMember($member->getID());
+				$boats = $this->boatRepository->getBoatsByMember($id);
+				$member = new Member($result[self::$id], $result[self::$firstName], $result[self::$lastName], $result[self::$identityNumber], $boats);
 				// Ersätt detta med ett anrop till getBoatsByMember i BoatRepository.php
 				/*
 				$sql = "SELECT * FROM " . BoatRepository::$dbTable . " WHERE " . BoatRepository::$memberID . " = ?";

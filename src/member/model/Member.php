@@ -8,7 +8,7 @@ class Member {
 	private $identityNumber;
 	private $boats;
 	
-	public function __construct($id, $firstName, $lastName, $identityNumber) {
+	public function __construct($id, $firstName, $lastName, $identityNumber, $boats) {
 		$this->validateId($id);
 		$this->validateName($firstName);
 		$this->validateName($lastName);
@@ -18,7 +18,7 @@ class Member {
 		$this->firstName = $firstName;
 		$this->lastName = $lastName;
 		$this->identityNumber = $identityNumber;
-		$this->boats = array();
+		$this->boats = $boats;
 	}
 	
 	public function addBoat(Boat $boat) {

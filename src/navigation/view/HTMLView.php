@@ -12,7 +12,7 @@ class HTMLView {
 					<html>
 					<head>
 						<meta charset='UTF-8'>
-						<title>Tims login</title>
+						<title>Den Glade Piraten</title>
 					</head>
 					<body>
 						$body
