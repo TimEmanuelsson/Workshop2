@@ -33,7 +33,7 @@ class BoatRepository extends Repository {
 			
 			foreach($result as $boat) {
 				$boatType = $this->boatTypeRepository->getBoatTypeByID($boat[self::$boatTypeID]);
-				$bt = new Boat($boat[self::$id], $boat[self::$boatTypeID], $boat[self::$memberID], $boat[self::$length]);
+				$bt = new Boat($boat[self::$id], $boat[self::$boatTypeID], $boat[self::$memberID], $boat[self::$length], $boatType);
 				$boats[] = $bt;
 			}
 			

@@ -2,6 +2,7 @@
 
 require_once ('Member.php');
 require_once ('./src/navigation/model/Repository.php');
+require_once('./src/boat/model/BoatRepository.php');
 
 class MemberRepository extends Repository {
 
@@ -12,8 +13,10 @@ class MemberRepository extends Repository {
 	
 	public static $dbTable = 'member';
 	
+	private $boatRepository;
 
 	public function __construct() {
+		$this->boatRepository = new BoatRepository();
 	}
 
 	public function add(Member $member) {
@@ -46,7 +49,9 @@ class MemberRepository extends Repository {
 			if ($result) {
 				$member = new Member($result[self::$id], $result[self::$firstName], $result[self::$lastName], $result[self::$identityNumber]);
 				
+				$this->boatRepository->getBoatsByMember($member->getID());
 				// Ersätt detta med ett anrop till getBoatsByMember i BoatRepository.php
+				/*
 				$sql = "SELECT * FROM " . BoatRepository::$dbTable . " WHERE " . BoatRepository::$memberID . " = ?";
 				$query = $db->prepare($sql);
 				$query->execute (array($result[self::$id]));
@@ -55,6 +60,7 @@ class MemberRepository extends Repository {
 					$bt = new Boat($boat[BoatRepository::$id], $boat[BoatRepository::$boatTypeID], $boat[BoatRepository::$memberID], $boat[BoatRepository::$length]);
 					$member->addBoat($bt);
 				}
+				 * */
 				return $member;
 			}
 
