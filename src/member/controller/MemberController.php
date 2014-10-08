@@ -21,8 +21,12 @@ Class MemberController {
 	{
 		$memberID = $this->memberView->getMemberID();
 		$member = $this->memberRepository->getMemberAndBoats($memberID);
+		
+		if($this->memberView->didUserPressEdit())
+		{
+			return $this->memberView->editMember($member);
+		}
+		
 		return $this->memberView->showMember($member);
 	}
-	
-	// TODO: LÄGG TILL editMember()-funktion.
 }
