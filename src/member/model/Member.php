@@ -9,10 +9,10 @@ class Member {
 	private $boats;
 	
 	public function __construct($id, $firstName, $lastName, $identityNumber, $boats) {
-		$this->validateId($id);
-		$this->validateName($firstName);
-		$this->validateName($lastName);
-		$this->validateIdentityNumber($identityNumber);
+		self::validateId($id);
+		self::validateName($firstName);
+		self::validateName($lastName);
+		self::validateIdentityNumber($identityNumber);
 		
 		$this->id = $id;
 		$this->firstName = $firstName;
@@ -45,19 +45,19 @@ class Member {
 		return $this->boats;
 	}
 
-	private function validateId($id) {
+	static public function validateId($id) {
 		if(!isset($id) || !is_numeric($id) || $id < 1 || $id > 99999999999) {
 			throw new ValidationException("Bad memberID.");
 		}
 	}
 	
-	private function validateName($name) {
+	static public function validateName($name) {
 		if(!isset($name) || $name = "" || strlen($name) < 2 || strlen($name) > 30) {
 			throw new ValidationException("Bad member name.");
 		}
 	}
 	
-	private function validateIdentityNumber($iNumber) {
+	static public function validateIdentityNumber($iNumber) {
 		if(!preg_match("/^\d{6}\-\d{4}$/", $iNumber)) {
 			throw new ValidationException("Bad member identity number.");
 		}

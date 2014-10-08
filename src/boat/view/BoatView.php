@@ -42,11 +42,7 @@ Class BoatView {
 		}
 		
 		$boatTypeSelect .= "</select>";
-		$ret = "
-			
-			<form METHOD='post'>
-				<fieldset>
-					<legend>Edit member information</legend>";
+
 		$ret = "
 			<h1>Edit boat - " . $boat->getID() . "</h1>
 			<h4>Edit Boat information</h4>

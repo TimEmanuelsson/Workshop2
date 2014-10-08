@@ -48,7 +48,7 @@ Class MemberView {
 		{
 			foreach ($member->getBoats() as $boat)
 			{
-				$contentString .= "<li>Boat type: " . utf8_encode($boat->getBoatType()) . ". Boat length: " . $boat->getLength() . " <a href='?boat=" . $boat->getID() . "&edit'>Edit</a></li>";
+				$contentString .= "<li>Boat type: " . utf8_encode($boat->getBoatType()) . ". Boat length: " . $boat->getLength() . " <a href='?member=" . $member->getID() . "&boat=" . $boat->getID() . "&edit'>Edit</a></li>";
 			}
 		}
 		

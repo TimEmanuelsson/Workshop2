@@ -26,8 +26,9 @@ Class MemberController {
 		{
 			if($this->memberView->didUserSubmitForm())
 			{
-				if($this->memberView->validateUserInput($member))
+				try
 				{
+					$this->memberView->validateUserInput($member);
 					// SPARA ANVÄNDAREN.
 					return "pop";
 				}
