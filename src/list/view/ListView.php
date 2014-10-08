@@ -48,7 +48,7 @@ Class ListView {
 		
 		foreach ($allMembersAndBoatDetailed as $detailedlist) {
 			$contentString .="
-			<li><a href='?member=" . $memberAndBoats->getID() . "'>" . utf8_encode($detailedlist->getFirstName()) . " " . utf8_encode($detailedlist->getLastName()) . "</a> " . $detailedlist->getIdentityNumber() . " Medlemsnummer: " . $detailedlist->getID() . "</li>
+			<li><a href='?member=" . $detailedlist->getID() . "'>" . utf8_encode($detailedlist->getFirstName()) . " " . utf8_encode($detailedlist->getLastName()) . "</a> " . $detailedlist->getIdentityNumber() . " Medlemsnummer: " . $detailedlist->getID() . "</li>
 			";
 		}
 
