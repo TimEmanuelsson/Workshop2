@@ -6,42 +6,49 @@ require_once('src/boat/controller/BoatController.php');
 require_once('./src/list/controller/ListController.php');
 
 class NavigationController
+{
+	private static $operationSuccess = true;
+	
+	public function doNavigation()
 	{
-		public function doNavigation()
+		$controller;
+		
+		
+		try
 		{
-			$controller;
-			
-			try
+			switch (NavigationView::getAction())
 			{
-				switch (NavigationView::getAction())
-				{
-					case NavigationView::$actionMember:
-						
-						$controller = new MemberController();
-						return $controller->showMember();
-						break;
-						
-					case NavigationView::$actionBoat:
-						
-						$controller = new BoatController();
-						return $controller->showBoat();
-						
-						break;
-						
-					case NavigationView::$actionList:
-					default:
-						
-						$controller = new ListController();
-						return $controller->showList();
-						
-						break;
+				case NavigationView::$actionMember:
 					
-				}	
-			}
-			catch (Exception $e)
-			{
-				echo $e;
-			}
+					$controller = new MemberController();
+					return $controller->showMember();
+					break;
+					
+				case NavigationView::$actionBoat:
+					
+					$controller = new BoatController();
+					$result = $controller->showBoat();
+					if($result === self::$operationSuccess) {
+						$controller = new MemberController();
+						return $controller->showMember(self::$operationSuccess);
+					}
+					return $result;
+					break;
+					
+				case NavigationView::$actionList:
+				default:
+					
+					$controller = new ListController();
+					return $controller->showList();
+					
+					break;
+				
+			}	
+		}
+		catch (Exception $e)
+		{
+			echo $e;
 		}
 	}
+}
 ?>

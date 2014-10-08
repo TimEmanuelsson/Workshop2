@@ -38,14 +38,13 @@ class BoatRepository extends Repository {
 		try {
 			$db = $this -> connection();
 
-			$sql = "UPDATE" . self::$dbTable . " SET " . self::$boatTypeID . "=?, " . self::$memberID . "=?, " . self::$length . "=? WHERE " . self::$id ."=?";
+			$sql = "UPDATE " . self::$dbTable . " SET " . self::$boatTypeID . "=?, " . self::$memberID . "=?, " . self::$length . "=? WHERE " . self::$id ."=?";
 			$params = array($boat -> getBoatTypeID(), $boat -> getMemberID(), $boat -> getLength(), $boat -> getID());
 
 			$query = $db -> prepare($sql);
 			$query -> execute($params);
-			
 		} catch (PDOException $e) {
-			die('Nåt gick åt helvete med databasen yo!');
+			die($e->getMessage());
 		}
 	}
 	

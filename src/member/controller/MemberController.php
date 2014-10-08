@@ -17,10 +17,14 @@ Class MemberController {
 		$this->memberView = new MemberView($this->memberRepository, $this->boatRepository);
 	}
 	
-	public function showMember()
+	public function showMember($operationSuccess = false)
 	{
 		$memberID = $this->memberView->getMemberID();
 		$member = $this->memberRepository->getMemberAndBoats($memberID);
+		
+		if($operationSuccess) {
+			$this->memberView->addMessage("Operation was successful.");
+		}
 		
 		if($this->memberView->didUserPressEdit())
 		{

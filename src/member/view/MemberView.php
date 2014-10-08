@@ -56,6 +56,7 @@ Class MemberView {
 		
 		$ret = "
 				<h1>Specific Member - " . utf8_encode($member->getFirstName()) . " " . utf8_encode($member->getLastName()) . "</h1>
+				" . $this->showMessages() . "
 				<a href='?CompactList'>Show Compact List</a>
 				<a href='?DetailedList'>Show Detailed List</a>
 				" . $contentString;
@@ -91,10 +92,7 @@ Class MemberView {
 					<legend>Edit member information</legend>";
 					
 		// Loopar igenom messages-arrayen och skriver ut meddelanden.
-		foreach ($this->messages as $message)
-		{
-			$ret .= '<p>' . $message . '</p>';
-		}
+		$ret .= $this->showMessages();
 		
 		$ret .= "
 					<div>
@@ -202,5 +200,20 @@ Class MemberView {
 		{
 			return TRUE;
 		}
+	}
+
+	public function addMessage($message) {
+		array_push($this->messages, $message);
+	}
+	
+	private function showMessages() {
+		$ret = "";
+		// Loopar igenom messages-arrayen och skriver ut meddelanden.
+		foreach ($this->messages as $message)
+		{
+			$ret .= '<p>' . $message . '</p>';
+		}
+		
+		return $ret;
 	}
 }

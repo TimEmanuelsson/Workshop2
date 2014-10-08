@@ -25,12 +25,12 @@ Class BoatController {
 				{
 					$newBoat = new Boat($this->boatView->getBoatID(), $this->boatView->getBoatType(), $this->boatView->getMemberID(), $this->boatView->getLength());
 					$this->boatRepository->update($newBoat);
-					//return
+					return true;
 				}
 				catch(Exception $e)
 				{
 					$this->boatView->setError($e->getMessage());
-					return $this->editBoat($boat);
+					return $this->boatView->editBoat($boat);
 				}
 			}
 			return $this->boatView->editBoat($boat);

@@ -11,12 +11,12 @@ Class BoatView {
 	}
 
 	public function getBoatID() {
-		return $_GET['boat'];
+		return $_REQUEST['boat'];
 	}
 	
 	public function getMemberID()
 	{
-		return $_GET['member'];
+		return $_REQUEST['member'];
 	}
 	
 	public function getBoatType()
@@ -36,7 +36,7 @@ Class BoatView {
 	}
 	
 	public function didUserPressEdit() {
-		return isset($_GET['edit']);
+		return isset($_REQUEST['edit']);
 	}
 	
 	public function didUserPressSubmit()
@@ -80,10 +80,13 @@ Class BoatView {
 		$ret = "
 			<h1>Edit boat - " . $boat->getID() . "</h1>
 			<h4>Edit Boat information</h4>
-			<form action='' method='post'>
+			<form action='?member=" . $_REQUEST['member'] . "' method='post'>
 			<fieldset>
 				<legend>Edit boat</legend>
 				$errorMessage
+				<input type='hidden' name='member' value='" . $_REQUEST['member'] . "'>
+				<input type='hidden' name='boat' value='" . $boat->getID() . "'>
+				<input type='hidden' name='edit'>
 				<div>
 					<label for='boatType'>Boat type: </label>
 					$boatTypeSelect
