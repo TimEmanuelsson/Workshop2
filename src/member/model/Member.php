@@ -40,6 +40,10 @@ class Member {
 	public function getIdentityNumber() {
 		return $this->identityNumber;
 	}
+	
+	public function getBoats() {
+		return $this->boats;
+	}
 
 	private function validateId($id) {
 		if(!isset($id) || !is_numeric($id) || $id < 1 || $id > 99999999999) {
