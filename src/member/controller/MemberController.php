@@ -24,7 +24,19 @@ Class MemberController {
 		
 		if($this->memberView->didUserPressEdit())
 		{
-			return $this->memberView->editMember($member);
+			if($this->memberView->didUserSubmitForm())
+			{
+				if($this->memberView->validateUserInput($member))
+				{
+					// SPARA ANVÄNDAREN.
+					return "pop";
+				}
+			 	return $this->memberView->editMember($member);
+			}
+			else
+			{
+				return $this->memberView->editMember($member);
+			}
 		}
 		
 		return $this->memberView->showMember($member);

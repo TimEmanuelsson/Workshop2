@@ -23,6 +23,11 @@ Class MemberView {
 		return isset($_GET['edit']);
 	}
 	
+	public function didUserSubmitForm()
+	{
+		return isset($_POST['confirmButton']);
+	}
+	
 	public function showMember($member)
 	{
 		$contentString = "
@@ -60,9 +65,28 @@ Class MemberView {
 	
 	public function editMember($member)
 	{
+		$firstName = utf8_encode($member->getFirstName());
+		$lastName = utf8_encode($member->getLastName());
+		$identityNumber = $member->getIdentityNumber();
+		
+		if(isset($_POST['memberFirstName']) && $_POST['memberFirstName'] != '')
+		{
+			$firstName = $_POST['memberFirstName'];
+		}
+		
+		if(isset($_POST['memberLastName']) && $_POST['memberLastName'] != '')
+		{
+			$lastName = $_POST['memberLastName'];
+		}
+		
+		if(isset($_POST['memberIdentityNumber']) && $_POST['memberIdentityNumber'] != '')
+		{
+			$identityNumber = $_POST['memberIdentityNumber'];
+		}
+			
 		$ret = "
 			<h1>Edit member - " . utf8_encode($member->getFirstName()) . " " . utf8_encode($member->getLastName()) . "</h1>
-			<form METHOD='post'>
+			<form METHOD='post' action=''>
 				<fieldset>
 					<legend>Edit member information</legend>";
 					
@@ -75,15 +99,15 @@ Class MemberView {
 		$ret .= "
 					<div>
 						<label for='memberFirstName'>First name: </label>
-						<input type='text' name='memberFirstName' id='memberFirstName' value='" . $member->getFirstName() . "'/>
+						<input type='text' name='memberFirstName' id='memberFirstName' value='" . $firstName . "'/>
 					</div>
 					<div>
 						<label for='memberLastName'>Last name: </label>
-						<input type='text' name='memberLastName' id='memberLastName' value='" . $member->getLastName() . "'/>
+						<input type='text' name='memberLastName' id='memberLastName' value='" . $lastName . "'/>
 					</div>
 					<div>
 						<label for='memberIdentityNumber'>Personal identity number: </label>
-						<input type='text' name='memberIdentityNumber' id='memberIdentityNumber' value='" . $member->getIdentityNumber() . "'/>
+						<input type='text' name='memberIdentityNumber' id='memberIdentityNumber' value='" . $identityNumber . "'/>
 					</div>
 					<div>
 						<input type='submit' id='confirmButton' name='confirmButton' value='Confirm'/>
@@ -92,5 +116,91 @@ Class MemberView {
 			</form>";
 			
 		return $ret;
+	}
+	
+	public function validateUserInput($member)
+	{
+		$regexString = '/^[A-Za-z][A-Za-z0-9]{2,31}$/';
+		$identityNumberRegex = '/^[0-9]{6}-[0-9]{4}$/';
+		$firstNameValidated = FALSE;
+		$lastNameValidated = FALSE;
+		$identityNumberValidated = FALSE;
+		
+		// Kontrollerar förnamnet.
+		if(isset($_POST['memberFirstName']) == FALSE || $_POST['memberFirstName'] == '' || strlen($_POST['memberFirstName']) < 3)
+		{
+			// Visar felmeddelande.
+			array_push($this->messages, "Firstname has to few characters. Minimum of 3 characters.");
+		}
+		else
+		{
+			// Kontrollerar om förnamnet innehåller otillåtna tecken.
+			if(!preg_match($regexString, $_POST['memberFirstName']))
+			{
+				// Tar bort de otillåtna tecknen.
+				$_POST['memberFirstName'] = strip_tags($_POST['memberFirstName']);
+				
+				// Visar felmeddelande.
+				array_push($this->messages, "Firstname contains illegal characters.");
+				
+				// Visa editsidan.
+				$this->editMember($member);
+				return FALSE;
+			}
+			else
+			{
+				// Förnamnet är validerat.
+				$firstNameValidated = TRUE;
+			}
+		}
+		
+		// Kontrollerar efternamnet.
+		if(isset($_POST['memberLastName']) == FALSE || $_POST['memberLastName'] == '' || strlen($_POST['memberLastName']) < 3)
+		{
+			// Visar felmeddelande.
+			array_push($this->messages, "Lastname has to few characters. Minimum of 3 characters.");
+		}
+		else
+		{
+			// Kontrollerar om användarnamnet innehåller otillåtna tecken.
+			if(!preg_match($regexString, $_POST['memberLastName']))
+			{
+				// Tar bort de otillåtna tecknen.
+				$_POST['memberLastName'] = strip_tags($_POST['memberLastName']);
+				
+				// Visar felmeddelande.
+				array_push($this->messages, "Lastname contains illegal characters.");
+				
+				// Visa editsidan.
+				$this->editMember($member);
+				return FALSE;
+			}
+			else
+			{
+				// Efternamnet är validerat.
+				$lastNameValidated = TRUE;
+			}
+		}
+		
+		// Kontrollerar personnumret.
+		if(isset($_POST['memberIdentityNumber']) == FALSE || $_POST['memberIdentityNumber'] == '' || !preg_match($identityNumberRegex, $_POST['memberIdentityNumber']))
+		{
+			// Visar felmeddelande.
+			array_push($this->messages, "Identity number need to be of format YYMMDD-XXXX.");
+			
+			// Visa editsidan.
+			$this->editMember($member);
+			return FALSE;
+		}
+		else
+		{
+			// Personnumret är validerat.
+			$identityNumberValidated = TRUE;
+		}
+		
+		if($firstNameValidated === TRUE && $lastNameValidated === TRUE &&	$identityNumberValidated === TRUE)
+		{
+			return TRUE;
+		}
 	}
 }
