@@ -18,6 +18,36 @@ class BoatRepository extends Repository {
 	public function __construct() {
 		$this->boatTypeRepository = new BoatTypeRepository();
 	}
+
+	public function add(Boat $boat) {
+		try {
+			$db = $this -> connection();
+
+			$sql = "INSERT INTO " . self::$dbTable . " (" . self::$boatTypeID . ", " . self::$memberID . ", " . self::$length . ") VALUES (?, ?, ?)";
+			$params = array($boat -> getBoatTypeID(), $boat -> getMemberID(), $member -> getLength());
+
+			$query = $db -> prepare($sql);
+			$query -> execute($params);
+			
+		} catch (PDOException $e) {
+			die('Nåt gick åt helvete med databasen yo!');
+		}
+	}
+
+	public function Update(Boat $boat) {
+		try {
+			$db = $this -> connection();
+
+			$sql = "UPDATE" . self::$dbTable . " SET " . self::$boatTypeID . "=?, " . self::$memberID . "=?, " . self::$length . "=? WHERE " . self::$id ."=?";
+			$params = array($boat -> getBoatTypeID(), $boat -> getMemberID(), $boat -> getLength(), $boat -> getID());
+
+			$query = $db -> prepare($sql);
+			$query -> execute($params);
+			
+		} catch (PDOException $e) {
+			die('Nåt gick åt helvete med databasen yo!');
+		}
+	}
 	
 	public function getBoatsByMember($memberID) {
 		$db = $this -> connection();

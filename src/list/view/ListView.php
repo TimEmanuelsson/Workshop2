@@ -29,7 +29,7 @@ Class ListView {
 		
 		foreach ($allMembersAndBoats as $memberAndBoats) {
 			$contentString .="
-			<li>Medlemsnummer: " . $memberAndBoats->getID() . "<br><a href='?member=" . $memberAndBoats->getID() . "'>" . utf8_encode($memberAndBoats->getFirstName()) . "
+			<li>Member number: " . $memberAndBoats->getID() . "<br><a href='?member=" . $memberAndBoats->getID() . "'>" . utf8_encode($memberAndBoats->getFirstName()) . "
 			" . utf8_encode($memberAndBoats->getLastName()) . "</a><br>Boat(s): " . count($memberAndBoats->getBoats()) . "</li><br>
 			";
 		}
@@ -50,7 +50,7 @@ Class ListView {
 		
 		foreach ($members as $member) {
 			$contentString .="
-			<li>Medlemsnummer: " . $member->getID() . "<br><a href='?member=" . $member->getID() . "'>" . utf8_encode($member->getFirstName()) . "
+			<li>Member number: " . $member->getID() . "<br><a href='?member=" . $member->getID() . "'>" . utf8_encode($member->getFirstName()) . "
 			" . utf8_encode($member->getLastName()) . "</a><br> Personal identity number: " . $member->getIdentityNumber() . " </li>
 			";
 			if(count($member->getBoats()) > 0) {

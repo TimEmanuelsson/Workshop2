@@ -34,6 +34,21 @@ class MemberRepository extends Repository {
 		}
 	}
 
+	public function Update(Member $member) {
+		try {
+			$db = $this -> connection();
+
+			$sql = "UPDATE" . self::$dbTable . " SET " . self::$firstName . "=?, " . self::$lastName . "=?, " . self::$identityNumber . "=? WHERE " . self::$id ."=?";
+			$params = array($member -> getFirstName(), $member -> getLastName(), $member -> getIdentityNumber(), $member -> getID());
+
+			$query = $db -> prepare($sql);
+			$query -> execute($params);
+			
+		} catch (PDOException $e) {
+			die('Nåt gick åt helvete med databasen yo!');
+		}
+	}
+
 	public function getMemberAndBoats($id) {
 		try {
 			$db = $this -> connection();
