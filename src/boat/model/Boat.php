@@ -1,12 +1,14 @@
 <?php
+require_once('./src/boat/model/BoatType.php');
 
 class Boat {
 	private $id;
 	private $boatTypeID;
 	private $memberID;
 	private $length;
+	private $boatType;
 	
-	public function __construct($id, $boatTypeID, $memberID, $length) {
+	public function __construct($id, $boatTypeID, $memberID, $length, $boatType) {
 		$this->validateId($id);
 		$this->validateId($boatTypeID);
 		$this->validateId($memberID);
@@ -16,6 +18,7 @@ class Boat {
 		$this->boatTypeID = $boatTypeID;
 		$this->memberID = $memberID;
 		$this->length = $length;
+		$this->boatType = $boatType;
 	}
 	
 	public function getID() {
@@ -32,6 +35,10 @@ class Boat {
 	
 	public function getLength() {
 		return $this->length;
+	}
+	
+	public function getBoatType() {
+		return $this->boatType->getBoatType();
 	}
 
 	private function validateId($id) {

@@ -2,7 +2,7 @@
 
 require_once('./src/navigation/view/NavigationView.php');
 require_once('./src/member/controller/MemberController.php');
-//require_once('src/list/view/BoatController.php');
+require_once('src/boat/controller/BoatController.php');
 require_once('./src/list/controller/ListController.php');
 
 class NavigationController
@@ -23,7 +23,8 @@ class NavigationController
 						
 					case NavigationView::$actionBoat:
 						
-						//$controller = new BoatController();
+						$controller = new BoatController();
+						return $controller->showBoat();
 						
 						break;
 						
