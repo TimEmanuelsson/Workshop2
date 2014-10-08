@@ -27,7 +27,8 @@ Class ListView {
 		
 		foreach ($allMembersAndBoats as $memberAndBoats) {
 			$contentString .="
-			<li><a href='?member=" . $memberAndBoats->getID() . "'>" . utf8_encode($memberAndBoats->getFirstName()) . " " . utf8_encode($memberAndBoats->getLastName()) . "</a> Medlemsnummer: " . $memberAndBoats->getID() . "</li>
+			<li><a href='?member=" . $memberAndBoats->getID() . "'>" . utf8_encode($memberAndBoats->getFirstName()) . "
+			" . utf8_encode($memberAndBoats->getLastName()) . "</a> Medlemsnummer: " . $memberAndBoats->getID() . "</li>
 			";
 		}
 		
@@ -43,13 +44,25 @@ Class ListView {
 	}
 	
 	public function showDetailedList(){
-		$allMembersAndBoatDetailed = $this->getList();
+		$members = $this->getList();
 		$contentString = "";
 		
-		foreach ($allMembersAndBoatDetailed as $detailedlist) {
+		foreach ($members as $member) {
 			$contentString .="
-			<li><a href='?member=" . $detailedlist->getID() . "'>" . utf8_encode($detailedlist->getFirstName()) . " " . utf8_encode($detailedlist->getLastName()) . "</a> " . $detailedlist->getIdentityNumber() . " Medlemsnummer: " . $detailedlist->getID() . "</li>
+			<li>Medlemsnummer: " . $member->getID() . "<br><a href='?member=" . $member->getID() . "'>" . utf8_encode($member->getFirstName()) . "
+			" . utf8_encode($member->getLastName()) . "</a><br> Personal identity number: " . $member->getIdentityNumber() . " </li>
 			";
+			if(count($member->getBoats()) > 0) {
+				$contentString .= '<ul>';
+
+				foreach ($member->getBoats() as $boat) {
+					$contentString .= "<li>Boat type: " . utf8_encode($boat->getBoatType()) . ". Boat length: " . $boat->getLength() . "
+					<a href='?boat=" . $boat->getID() . "'>Edit</a></li>";
+				}
+				$contentString .= '</ul><br>';
+			} else {
+				$contentString .= '<li>Member do not have any boat(s).</li><br>';
+			}
 		}
 
 		$ret = "
