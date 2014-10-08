@@ -24,4 +24,25 @@ class BoatTypeRepository extends Repository {
 			
 			return $boatType;
 	}
+	
+	public function getAllBoatTypes() {
+		$db = $this -> connection();
+		
+			$sql = "SELECT * FROM " . self::$dbTable;
+			$params = array();
+
+			$query = $db -> prepare($sql);
+			$query -> execute($params);
+
+			$result = $query -> fetchAll();
+			
+			$boatTypes = array();
+			
+			foreach($result as $row) {
+				$boatType = new BoatType($row[self::$id], $row[self::$boatType]);
+				$boatTypes[] = $boatType;
+			}
+			
+			return $boatTypes;
+	}
 }

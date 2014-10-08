@@ -21,22 +21,39 @@ class BoatRepository extends Repository {
 	
 	public function getBoatsByMember($memberID) {
 		$db = $this -> connection();
-			$boats = array();
+		$boats = array();
+	
+		$sql = "SELECT * FROM " . self::$dbTable . " WHERE " . self::$memberID . " = ?";
+		$params = array($memberID);
+
+		$query = $db -> prepare($sql);
+		$query -> execute($params);
+
+		$result = $query -> fetchAll();
 		
-			$sql = "SELECT * FROM " . self::$dbTable . " WHERE " . self::$memberID . " = ?";
-			$params = array($memberID);
+		foreach($result as $boat) {
+			$boatType = $this->boatTypeRepository->getBoatTypeByID($boat[self::$boatTypeID]);
+			$bt = new Boat($boat[self::$id], $boat[self::$boatTypeID], $boat[self::$memberID], $boat[self::$length], $boatType);
+			$boats[] = $bt;
+		}
+		
+		return $boats;
+	}
+	
+	public function getBoatByID($boatID) {
+		$db = $this -> connection();
+	
+		$sql = "SELECT * FROM " . self::$dbTable . " WHERE " . self::$id . " = ?";
+		$params = array($boatID);
 
-			$query = $db -> prepare($sql);
-			$query -> execute($params);
+		$query = $db -> prepare($sql);
+		$query -> execute($params);
 
-			$result = $query -> fetchAll();
-			
-			foreach($result as $boat) {
-				$boatType = $this->boatTypeRepository->getBoatTypeByID($boat[self::$boatTypeID]);
-				$bt = new Boat($boat[self::$id], $boat[self::$boatTypeID], $boat[self::$memberID], $boat[self::$length], $boatType);
-				$boats[] = $bt;
-			}
-			
-			return $boats;
+		$result = $query -> fetch();
+		
+		$boatType = $this->boatTypeRepository->getBoatTypeByID($boatID);
+		$boat = new Boat($result[self::$id], $result[self::$boatTypeID], $result[self::$memberID], $result[self::$length], $boatType);
+		
+		return $boat;
 	}
 }

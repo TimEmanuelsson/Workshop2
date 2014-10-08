@@ -10,12 +10,17 @@ Class BoatController {
 
 	public function __construct() {
 		$this->boatRepository = new boatRepository();
-		$this->boatView = new boatView($this->boatRepository);
+		$this->boatView = new boatView();
 	}
 
 	public function showBoat() {
 		$boatID = $this->boatView->getBoatID();
-		$boat = $this->boatRepository->getBoatsByMember($boatID);
+		$boat = $this->boatRepository->getBoatByID($boatID);
+		
+		if($this->boatView->didUserPressEdit()) {
+			return $this->boatView->editBoat($boat);
+		}
+		
 		return $this->boatView->showBoat($boat);
 	}
 }
