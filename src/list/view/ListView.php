@@ -27,8 +27,8 @@ Class ListView {
 		
 		foreach ($allMembersAndBoats as $memberAndBoats) {
 			$contentString .="
-			<li><a href='?member=" . $memberAndBoats->getID() . "'>" . utf8_encode($memberAndBoats->getFirstName()) . "
-			" . utf8_encode($memberAndBoats->getLastName()) . "</a> Medlemsnummer: " . $memberAndBoats->getID() . "</li>
+			<li>Medlemsnummer: " . $memberAndBoats->getID() . "<br><a href='?member=" . $memberAndBoats->getID() . "'>" . utf8_encode($memberAndBoats->getFirstName()) . "
+			" . utf8_encode($memberAndBoats->getLastName()) . "</a><br>Boat(s): " . count($memberAndBoats->getBoats()) . "</li><br>
 			";
 		}
 		
@@ -57,7 +57,7 @@ Class ListView {
 
 				foreach ($member->getBoats() as $boat) {
 					$contentString .= "<li>Boat type: " . utf8_encode($boat->getBoatType()) . ". Boat length: " . $boat->getLength() . "
-					<a href='?boat=" . $boat->getID() . "'>Edit</a></li>";
+					<a href='?boat=" . $boat->getID() . "&edit'>Edit</a></li>";
 				}
 				$contentString .= '</ul><br>';
 			} else {
