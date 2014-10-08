@@ -17,10 +17,12 @@ Class ListView {
 		return FALSE;
 	}
 	
+	//Hämtar ut alla medlemmar och båtar.
 	public function getList(){
 		return $this->memberRepository->getAllMembersAndBoats();
 	}
 	
+	//Visar den kompakta listan. Retunera HTML-sträng.
 	public function showCompactList(){
 		$allMembersAndBoats = $this->getList();
 		$contentString = "";
@@ -36,13 +38,12 @@ Class ListView {
 				<h1>Compact List</h1>
 				<a href='?DetailedList'>Show Detailed List</a>
 				<ul>$contentString</ul>
-				
-		
 		";
 		
 		return $ret;
 	}
 	
+	//Visar den detaljerade listan. Retunera HTML-sträng.
 	public function showDetailedList(){
 		$members = $this->getList();
 		$contentString = "";

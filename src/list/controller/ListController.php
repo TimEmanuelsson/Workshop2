@@ -20,7 +20,7 @@ class ListController
 	// Visar en vald lista
 	public function showList()
 	{	
-		// Visar den detaljerade listan.
+		// Visar den detaljerade listan. Annars visar den kompakta listan.
 		if($this->listView->didUserPressDetailedList() == TRUE)
 		{
 			return $this->listView->showDetailedList();
