@@ -4,6 +4,7 @@ require_once('./src/boat/model/BoatTypeRepository.php');
 Class BoatView {
 	
 	private $boatTypeRepository;
+	private $errorMessage;
 	
 	public function __construct() {
 		$this->boatTypeRepository = new BoatTypeRepository();
@@ -13,8 +14,34 @@ Class BoatView {
 		return $_GET['boat'];
 	}
 	
+	public function getMemberID()
+	{
+		return $_GET['member'];
+	}
+	
+	public function getBoatType()
+	{
+		if(isset($_POST['boatType']) && $_POST['boatType'] != '')
+		{
+			return $_POST['boatType'];
+		}
+	}
+	
+	public function getLength()
+	{
+		if(isset($_POST['boatLength']) && $_POST['boatLength'] != '')
+		{
+			return $_POST['boatLength'];
+		}
+	}
+	
 	public function didUserPressEdit() {
 		return isset($_GET['edit']);
+	}
+	
+	public function didUserPressSubmit()
+	{
+		return isset($_POST['submitButton']);
 	}
 
 	public function showBoat($boat) {
@@ -29,7 +56,9 @@ Class BoatView {
 		return $contentString;
 	}
 	
-	public function editBoat($boat) {
+	public function editBoat($boat)
+	{
+		$errorMessage = '';
 		$boatTypes = $this->boatTypeRepository->getAllBoatTypes();
 		
 		$boatTypeSelect = "<select name='boatType' id='boatType'>";
@@ -42,13 +71,19 @@ Class BoatView {
 		}
 		
 		$boatTypeSelect .= "</select>";
-
+		
+		if(isset($this->errorMessage))
+		{
+			$errorMessage = "<p>$this->errorMessage</p>";
+		}
+		
 		$ret = "
 			<h1>Edit boat - " . $boat->getID() . "</h1>
 			<h4>Edit Boat information</h4>
-			<form action='?boat=" . $this->getBoatID() . "&edit' method='post'>
+			<form action='' method='post'>
 			<fieldset>
 				<legend>Edit boat</legend>
+				$errorMessage
 				<div>
 					<label for='boatType'>Boat type: </label>
 					$boatTypeSelect
@@ -58,11 +93,22 @@ Class BoatView {
 					<input type='text' name='boatLength' id='boatLength' value='" . $boat->getLength() . "'><br />
 				</div>
 				<div>
-					<input type='submit' value='Confirm'>
+					<input type='submit' name='submitButton' value='Confirm'>
 				</div>
 			</fieldset>
 		";
 		
 		return $ret;
 	}
+	
+	public function setError($errorMessage)
+	{
+		$this->errorMessage = $errorMessage;
+	}
+	
+	
+	
+	
+	
+	
 }

@@ -8,7 +8,7 @@ class Boat {
 	private $length;
 	private $boatType;
 	
-	public function __construct($id, $boatTypeID, $memberID, $length, $boatType) {
+	public function __construct($id, $boatTypeID, $memberID, $length, $boatType = NULL) {
 		$this->validateId($id);
 		$this->validateId($boatTypeID);
 		$this->validateId($memberID);
@@ -18,7 +18,11 @@ class Boat {
 		$this->boatTypeID = $boatTypeID;
 		$this->memberID = $memberID;
 		$this->length = $length;
-		$this->boatType = $boatType;
+		
+		if($boatType != NULL)
+		{
+			$this->boatType = $boatType;
+		}
 	}
 	
 	public function getID() {

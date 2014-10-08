@@ -17,7 +17,22 @@ Class BoatController {
 		$boatID = $this->boatView->getBoatID();
 		$boat = $this->boatRepository->getBoatByID($boatID);
 		
-		if($this->boatView->didUserPressEdit()) {
+		if($this->boatView->didUserPressEdit())
+		{
+			if($this->boatView->didUserPressSubmit())
+			{
+				try
+				{
+					$newBoat = new Boat($this->boatView->getBoatID(), $this->boatView->getBoatType(), $this->boatView->getMemberID(), $this->boatView->getLength());
+					$this->boatRepository->update($newBoat);
+					//return
+				}
+				catch(Exception $e)
+				{
+					$this->boatView->setError($e->getMessage());
+					return $this->editBoat($boat);
+				}
+			}
 			return $this->boatView->editBoat($boat);
 		}
 		

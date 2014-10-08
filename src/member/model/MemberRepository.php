@@ -34,7 +34,7 @@ class MemberRepository extends Repository {
 		}
 	}
 
-	public function Update(Member $member) {
+	public function update(Member $member) {
 		try {
 			$db = $this -> connection();
 

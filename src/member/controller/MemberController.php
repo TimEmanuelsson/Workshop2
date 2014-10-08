@@ -32,6 +32,10 @@ Class MemberController {
 					// SPARA ANVÄNDAREN.
 					return "pop";
 				}
+				catch(Exception $e)
+				{
+					
+				}
 			 	return $this->memberView->editMember($member);
 			}
 			else

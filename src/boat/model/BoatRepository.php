@@ -34,7 +34,7 @@ class BoatRepository extends Repository {
 		}
 	}
 
-	public function Update(Boat $boat) {
+	public function update(Boat $boat) {
 		try {
 			$db = $this -> connection();
 
