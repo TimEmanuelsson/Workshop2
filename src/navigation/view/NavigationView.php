@@ -10,7 +10,7 @@ class NavigationView
 	
 	public static function getAction()
 	{
-		if(isset($_REQUEST[self::$actionMember]) && !isset($_REQUEST[self::$actionBoat]))
+		if(isset($_REQUEST[self::$actionMember]) && !isset($_REQUEST[self::$actionBoat]) && !isset($_REQUEST[self::$actionAddBoat]))
 		{
 			return self::$actionMember;
 		}
@@ -24,7 +24,7 @@ class NavigationView
 			return self::$actionAddMember;
 		}
 		
-		if(isset($_REQUEST[self::$actionAddBoat])) {
+		if(isset($_REQUEST[self::$actionMember]) && isset($_REQUEST[self::$actionAddBoat])) {
 			return self::$actionAddBoat;
 		}
 		

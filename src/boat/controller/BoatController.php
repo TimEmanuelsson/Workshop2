@@ -14,6 +14,29 @@ Class BoatController {
 	}
 
 	public function showBoat() {
+		
+		if($this->boatView->didUserSubmitAddForm())
+		{
+			try
+			{
+				// TODO: FIXA HÄR v
+				$newBoat = new Boat(0, $this->boatView->getBoatType(), $this->boatView->getLastName(), $this->boatView->getIdentityNumber());
+				$member = $this->memberRepository->add($newMember);
+				$this->memberView->setSuccessMessage();
+				return $this->memberView->showMember($member);
+			}
+			catch(Exception $e)
+			{
+				$this->memberView->addMessage($e->getMessage());
+				return $this->memberView->addMember();
+			}
+		 	
+		}
+		
+		if($this->memberView->didUserPressAdd()) {
+			return $this->memberView->addMember();
+		}
+		
 		$boatID = $this->boatView->getBoatID();
 		$boat = $this->boatRepository->getBoatByID($boatID);
 		

@@ -56,7 +56,7 @@ Class MemberView {
 				<li>MemberID: " . $member->getID() . "</li>
 				<li>Personal Identity Number: " . $member->getIdentityNumber() . "</li>
 			</ul>
-			<h4>" . utf8_encode($member->getFirstName()) . "'s boats</h4>
+			<h4>" . utf8_encode($member->getFirstName()) . "'s boats <a href='?member=" . $member->getID() . "&addboat'>Add boat</a></h4>
 			<ul>
 				";
 		
