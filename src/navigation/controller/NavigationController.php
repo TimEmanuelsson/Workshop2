@@ -35,6 +35,17 @@ class NavigationController
 					return $result;
 					break;
 					
+				case NavigationView::$actionDeleteMember:
+					
+					$controller = new MemberController();
+					$result = $controller->showMember();
+					if($result === self::$operationSuccess) {
+						$controller = new ListController();
+						$result = $controller->showList(self::$operationSuccess); 
+					}
+					return $result;
+					break;
+					
 				case NavigationView::$actionBoat:
 					
 					$controller = new BoatController();
@@ -50,7 +61,23 @@ class NavigationController
 					
 					$controller = new BoatController();
 					$result = $controller->showBoat();
+					if($result === self::$operationSuccess) {
+						$controller = new MemberController();
+						return $controller->showMember(self::$operationSuccess);
+					}
 					return $result;
+					break;
+					
+				case NavigationView::$actionDeleteBoat:
+					
+					$controller = new BoatController();
+					$result = $controller->showBoat();
+					if($result === self::$operationSuccess) {
+						$controller = new MemberController();
+						return $controller->showMember(self::$operationSuccess);
+					}
+					$controller = new MemberController();
+					return $controller->showMember();
 					break;
 					
 				case NavigationView::$actionList:

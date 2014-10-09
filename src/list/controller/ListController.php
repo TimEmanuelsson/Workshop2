@@ -18,8 +18,12 @@ class ListController
 	}
 	
 	// Visar en vald lista
-	public function showList()
-	{	
+	public function showList($operationSuccess = false)
+	{
+		if($operationSuccess) {
+			$this->listView->setSuccessMessage();
+		}
+			
 		// Visar den detaljerade listan. Annars visar den kompakta listan.
 		if($this->listView->didUserPressDetailedList() == TRUE)
 		{

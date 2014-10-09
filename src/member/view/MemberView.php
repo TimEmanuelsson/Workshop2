@@ -39,19 +39,23 @@ Class MemberView {
 		return isset($_REQUEST['addmember']);
 	}
 	
+	public function didUserPressDelete() {
+		return isset($_GET['deletemember']);
+	}
+	
 	public function didUserSubmitEditForm()
 	{
-		return isset($_POST['confirmEdit']);
+		return isset($_POST['confirmEditMember']);
 	}
 	
 	public function didUserSubmitAddForm() {
-		return isset($_POST['confirmAdd']);
+		return isset($_POST['confirmAddMember']);
 	}
 	
 	public function showMember($member)
 	{
 		$contentString = "
-			<h4>Member Information <a href='?member=" . $member->getID() . "&edit'>Edit</a> <a href='?member=" . $member->getID() . "&delete'>Delete</a></h4>
+			<h4>Member Information <a href='?member=" . $member->getID() . "&edit'>Edit</a> <a href='?member=" . $member->getID() . "&deletemember'>Delete</a></h4>
 			<ul>
 				<li>MemberID: " . $member->getID() . "</li>
 				<li>Personal Identity Number: " . $member->getIdentityNumber() . "</li>
@@ -69,7 +73,7 @@ Class MemberView {
 			foreach ($member->getBoats() as $boat)
 			{
 				$contentString .= "<li>Boat type: " . utf8_encode($boat->getBoatType()) . ". Boat length: " . $boat->getLength() . " 
-				<a href='?member=" . $member->getID() . "&boat=" . $boat->getID() . "&edit'>Edit</a> <a href='?member=" . $member->getID() . "&boat=" . $boat->getID() . "&delete'>Delete</a></li>";
+				<a href='?member=" . $member->getID() . "&boat=" . $boat->getID() . "&edit'>Edit</a> <a href='?member=" . $member->getID() . "&boat=" . $boat->getID() . "&deleteboat'>Delete</a></li>";
 			}
 		}
 		
@@ -131,7 +135,7 @@ Class MemberView {
 						<input type='text' name='memberIdentityNumber' id='memberIdentityNumber' value='" . $identityNumber . "'/>
 					</div>
 					<div>
-						<input type='submit' id='confirmEdit' name='confirmEdit' value='Confirm'/>
+						<input type='submit' id='confirmEdit' name='confirmEditMember' value='Confirm'/>
 					</div>
 				</fieldset>
 			</form>";
@@ -184,7 +188,7 @@ Class MemberView {
 						<input type='text' name='memberIdentityNumber' id='memberIdentityNumber' value='" . $identityNumber . "'/>
 					</div>
 					<div>
-						<input type='submit' id='confirmAdd' name='confirmAdd' value='Confirm'/>
+						<input type='submit' id='confirmAdd' name='confirmAddMember' value='Confirm'/>
 					</div>
 				</fieldset>
 			</form>";

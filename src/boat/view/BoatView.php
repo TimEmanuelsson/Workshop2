@@ -39,9 +39,23 @@ Class BoatView {
 		return isset($_REQUEST['edit']);
 	}
 	
-	public function didUserPressSubmit()
+	public function didUserPressAdd() {
+		return isset($_REQUEST['addboat']);
+	}
+	
+	public function didUserPressDelete()
 	{
-		return isset($_POST['submitButton']);
+		return isset($_GET['deleteboat']);
+	}
+	
+	public function didUserSubmitEditForm()
+	{
+		return isset($_POST['confirmEditBoat']);
+	}
+	
+	public function didUserSubmitAddForm()
+	{
+		return isset($_POST['confirmAddBoat']);
 	}
 
 	public function showBoat($boat) {
@@ -54,6 +68,48 @@ Class BoatView {
 				";
 		
 		return $contentString;
+	}
+	
+	public function addBoat()
+	{
+		$errorMessage = '';
+		$boatTypes = $this->boatTypeRepository->getAllBoatTypes();
+		
+		$boatTypeSelect = "<select name='boatType' id='boatType'>";
+		foreach($boatTypes as $boatType){
+			$boatTypeSelect .= "<option value='" . $boatType->getID() . "'>" . utf8_encode($boatType->getBoatType()) . "</option>";
+		}
+		
+		$boatTypeSelect .= "</select>";
+		
+		if(isset($this->errorMessage))
+		{
+			$errorMessage = "<p>$this->errorMessage</p>";
+		}
+		
+		$ret = "
+			<h1>Add boat</h1>
+			<form action='?member=" . $_REQUEST['member'] . "' method='post'>
+			<fieldset>
+				<legend>Add new boat</legend>
+				$errorMessage
+				<input type='hidden' name='member' value='" . $_REQUEST['member'] . "'>
+				<input type='hidden' name='addboat'>
+				<div>
+					<label for='boatType'>Boat type: </label>
+					$boatTypeSelect
+				</div>
+				<div>
+					<label for='boatLength'>Boat length: </label>
+					<input type='text' name='boatLength' id='boatLength' value=''><br />
+				</div>
+				<div>
+					<input type='submit' name='confirmAddBoat' value='Confirm'>
+				</div>
+			</fieldset>
+		";
+		
+		return $ret;
 	}
 	
 	public function editBoat($boat)
@@ -96,7 +152,7 @@ Class BoatView {
 					<input type='text' name='boatLength' id='boatLength' value='" . $boat->getLength() . "'><br />
 				</div>
 				<div>
-					<input type='submit' name='submitButton' value='Confirm'>
+					<input type='submit' name='confirmEditBoat' value='Confirm'>
 				</div>
 			</fieldset>
 		";

@@ -23,8 +23,8 @@ class BoatRepository extends Repository {
 		try {
 			$db = $this -> connection();
 
-			$sql = "DELETE FROM " . self::$dbTable . "WHERE " . self::$id ."=?";
-			$params = array($boat->getID());
+			$sql = "DELETE FROM " . self::$dbTable . " WHERE " . self::$id ."=?";
+			$params = array($id);
 
 			$query = $db -> prepare($sql);
 			$query -> execute($params);
@@ -39,7 +39,7 @@ class BoatRepository extends Repository {
 			$db = $this -> connection();
 
 			$sql = "INSERT INTO " . self::$dbTable . " (" . self::$boatTypeID . ", " . self::$memberID . ", " . self::$length . ") VALUES (?, ?, ?)";
-			$params = array($boat -> getBoatTypeID(), $boat -> getMemberID(), $member -> getLength());
+			$params = array($boat -> getBoatTypeID(), $boat -> getMemberID(), $boat -> getLength());
 
 			$query = $db -> prepare($sql);
 			$query -> execute($params);

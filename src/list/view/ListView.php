@@ -3,10 +3,12 @@
 Class ListView {
 	private $memberRepository;
 	private $boatRepository;
+	private $messages;
 	
 	public function __construct(MemberRepository $memberRepository, BoatRepository $boatRepository){
 		$this->memberRepository = $memberRepository;
 		$this->boatRepository = $boatRepository;
+		$this->messages = array();
 	}
 	
 	public function didUserPressDetailedList(){
@@ -36,6 +38,7 @@ Class ListView {
 		
 		$ret = "
 				<h1>Compact List</h1>
+				" . $this->showMessages() . "
 				<a href='?DetailedList'>Show Detailed List</a><br />
 				<a href='?addmember'>Add member</a>
 				<ul>$contentString</ul>
@@ -68,11 +71,31 @@ Class ListView {
 
 		$ret = "
 				<h1>Detailed List</h1>
+				" . $this->showMessages() . "
 				<a href='?CompactList'>Show Compact List</a><br />
 				<a href='?addmember'>Add member</a>
 				<ul>$contentString</ul>
 		";
 
+		return $ret;
+	}
+	
+	public function addMessage($message) {
+		array_push($this->messages, $message);
+	}
+	
+	public function setSuccessMessage() {
+		$this->addMessage("Operation was successful.");
+	}
+	
+	private function showMessages() {
+		$ret = "";
+		// Loopar igenom messages-arrayen och skriver ut meddelanden.
+		foreach ($this->messages as $message)
+		{
+			$ret .= '<p>' . $message . '</p>';
+		}
+		
 		return $ret;
 	}
 }

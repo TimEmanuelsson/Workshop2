@@ -44,6 +44,19 @@ Class MemberController {
 			return $this->memberView->addMember();
 		}
 		
+		if($this->memberView->didUserPressDelete())
+		{
+			try
+			{
+				$this->memberRepository->delete($this->memberView->getMemberID());
+				return true;
+			}
+			catch(Exception $e)
+			{
+				return false;
+			}
+		}
+		
 		$memberID = $this->memberView->getMemberID();
 		$member = $this->memberRepository->getMemberAndBoats($memberID);
 		

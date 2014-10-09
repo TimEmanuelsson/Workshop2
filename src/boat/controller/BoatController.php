@@ -19,22 +19,33 @@ Class BoatController {
 		{
 			try
 			{
-				// TODO: FIXA HÄR v
-				$newBoat = new Boat(0, $this->boatView->getBoatType(), $this->boatView->getLastName(), $this->boatView->getIdentityNumber());
-				$member = $this->memberRepository->add($newMember);
-				$this->memberView->setSuccessMessage();
-				return $this->memberView->showMember($member);
+				$newBoat = new Boat(0, $this->boatView->getBoatType(), $this->boatView->getMemberID(), $this->boatView->getLength());
+				$boat = $this->boatRepository->add($newBoat);
+				return true;
 			}
 			catch(Exception $e)
 			{
-				$this->memberView->addMessage($e->getMessage());
-				return $this->memberView->addMember();
+				$this->boatView->setError($e->getMessage());
+				return $this->boatView->addBoat();
 			}
 		 	
 		}
 		
-		if($this->memberView->didUserPressAdd()) {
-			return $this->memberView->addMember();
+		if($this->boatView->didUserPressAdd()) {
+			return $this->boatView->addBoat();
+		}
+		
+		if($this->boatView->didUserPressDelete())
+		{
+			try
+			{
+				$this->boatRepository->delete($this->boatView->getBoatID());
+				return true;
+			}
+			catch(Exception $e)
+			{
+				return false;
+			}
 		}
 		
 		$boatID = $this->boatView->getBoatID();
@@ -42,7 +53,7 @@ Class BoatController {
 		
 		if($this->boatView->didUserPressEdit())
 		{
-			if($this->boatView->didUserPressSubmit())
+			if($this->boatView->didUserSubmitEditForm())
 			{
 				try
 				{

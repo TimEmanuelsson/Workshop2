@@ -43,8 +43,8 @@ class MemberRepository extends Repository {
 		try {
 			$db = $this -> connection();
 
-			$sql = "DELETE FROM " . self::$dbTable . "WHERE " . self::$id ."=?";
-			$params = array($member->getID());
+			$sql = "DELETE FROM " . self::$dbTable . " WHERE " . self::$id ."=?";
+			$params = array($id);
 
 			$query = $db -> prepare($sql);
 			$query -> execute($params);
