@@ -36,7 +36,8 @@ Class ListView {
 		
 		$ret = "
 				<h1>Compact List</h1>
-				<a href='?DetailedList'>Show Detailed List</a>
+				<a href='?DetailedList'>Show Detailed List</a><br />
+				<a href='?addmember'>Add member</a>
 				<ul>$contentString</ul>
 		";
 		
@@ -68,7 +69,8 @@ Class ListView {
 
 		$ret = "
 				<h1>Detailed List</h1>
-				<a href='?CompactList'>Show Compact List</a>
+				<a href='?CompactList'>Show Compact List</a><br />
+				<a href='?addmember'>Add member</a>
 				<ul>$contentString</ul>
 		";
 

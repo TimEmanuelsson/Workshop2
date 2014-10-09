@@ -15,17 +15,37 @@ Class MemberView {
 	
 	public function getMemberID()
 	{
-		return $_GET['member'];
+		return $_REQUEST['member'];
+	}
+	
+	public function getFirstName() {
+		return $_POST['memberFirstName'];
+	}
+	
+	public function getLastName() {
+		return $_POST['memberLastName'];
+	}
+	
+	public function getIdentityNumber() {
+		return $_POST['memberIdentityNumber'];
 	}
 	
 	public function didUserPressEdit()
 	{
-		return isset($_GET['edit']);
+		return isset($_REQUEST['edit']);
 	}
 	
-	public function didUserSubmitForm()
+	public function didUserPressAdd() {
+		return isset($_REQUEST['addmember']);
+	}
+	
+	public function didUserSubmitEditForm()
 	{
-		return isset($_POST['confirmButton']);
+		return isset($_POST['confirmEdit']);
+	}
+	
+	public function didUserSubmitAddForm() {
+		return isset($_POST['confirmAdd']);
 	}
 	
 	public function showMember($member)
@@ -87,7 +107,7 @@ Class MemberView {
 			
 		$ret = "
 			<h1>Edit member - " . utf8_encode($member->getFirstName()) . " " . utf8_encode($member->getLastName()) . "</h1>
-			<form METHOD='post' action=''>
+			<form METHOD='post' action='?member=" . $_REQUEST['member'] . "'>
 				<fieldset>
 					<legend>Edit member information</legend>";
 					
@@ -95,6 +115,8 @@ Class MemberView {
 		$ret .= $this->showMessages();
 		
 		$ret .= "
+					<input type='hidden' name='member' value='" . $_REQUEST['member'] . "'>
+					<input type='hidden' name='edit'>
 					<div>
 						<label for='memberFirstName'>First name: </label>
 						<input type='text' name='memberFirstName' id='memberFirstName' value='" . $firstName . "'/>
@@ -108,7 +130,7 @@ Class MemberView {
 						<input type='text' name='memberIdentityNumber' id='memberIdentityNumber' value='" . $identityNumber . "'/>
 					</div>
 					<div>
-						<input type='submit' id='confirmButton' name='confirmButton' value='Confirm'/>
+						<input type='submit' id='confirmEdit' name='confirmEdit' value='Confirm'/>
 					</div>
 				</fieldset>
 			</form>";
@@ -116,94 +138,65 @@ Class MemberView {
 		return $ret;
 	}
 	
-	public function validateUserInput($member)
+	public function addMember()
 	{
-		$regexString = '/^[A-Za-z][A-Za-z0-9]{2,31}$/';
-		$identityNumberRegex = '/^[0-9]{6}-[0-9]{4}$/';
-		$firstNameValidated = FALSE;
-		$lastNameValidated = FALSE;
-		$identityNumberValidated = FALSE;
+		$firstName = "";
+		$lastName = "";
+		$identityNumber = "";
 		
-		// Kontrollerar förnamnet.
-		if(isset($_POST['memberFirstName']) == FALSE || $_POST['memberFirstName'] == '' || strlen($_POST['memberFirstName']) < 3)
+		if(isset($_POST['memberFirstName']) && $_POST['memberFirstName'] != '')
 		{
-			// Visar felmeddelande.
-			array_push($this->messages, "Firstname has to few characters. Minimum of 3 characters.");
-		}
-		else
-		{
-			// Kontrollerar om förnamnet innehåller otillåtna tecken.
-			if(!preg_match($regexString, $_POST['memberFirstName']))
-			{
-				// Tar bort de otillåtna tecknen.
-				$_POST['memberFirstName'] = strip_tags($_POST['memberFirstName']);
-				
-				// Visar felmeddelande.
-				array_push($this->messages, "Firstname contains illegal characters.");
-				
-				// Visa editsidan.
-				$this->editMember($member);
-				return FALSE;
-			}
-			else
-			{
-				// Förnamnet är validerat.
-				$firstNameValidated = TRUE;
-			}
+			$firstName = $_POST['memberFirstName'];
 		}
 		
-		// Kontrollerar efternamnet.
-		if(isset($_POST['memberLastName']) == FALSE || $_POST['memberLastName'] == '' || strlen($_POST['memberLastName']) < 3)
+		if(isset($_POST['memberLastName']) && $_POST['memberLastName'] != '')
 		{
-			// Visar felmeddelande.
-			array_push($this->messages, "Lastname has to few characters. Minimum of 3 characters.");
-		}
-		else
-		{
-			// Kontrollerar om användarnamnet innehåller otillåtna tecken.
-			if(!preg_match($regexString, $_POST['memberLastName']))
-			{
-				// Tar bort de otillåtna tecknen.
-				$_POST['memberLastName'] = strip_tags($_POST['memberLastName']);
-				
-				// Visar felmeddelande.
-				array_push($this->messages, "Lastname contains illegal characters.");
-				
-				// Visa editsidan.
-				$this->editMember($member);
-				return FALSE;
-			}
-			else
-			{
-				// Efternamnet är validerat.
-				$lastNameValidated = TRUE;
-			}
+			$lastName = $_POST['memberLastName'];
 		}
 		
-		// Kontrollerar personnumret.
-		if(isset($_POST['memberIdentityNumber']) == FALSE || $_POST['memberIdentityNumber'] == '' || !preg_match($identityNumberRegex, $_POST['memberIdentityNumber']))
+		if(isset($_POST['memberIdentityNumber']) && $_POST['memberIdentityNumber'] != '')
 		{
-			// Visar felmeddelande.
-			array_push($this->messages, "Identity number need to be of format YYMMDD-XXXX.");
+			$identityNumber = $_POST['memberIdentityNumber'];
+		}
 			
-			// Visa editsidan.
-			$this->editMember($member);
-			return FALSE;
-		}
-		else
-		{
-			// Personnumret är validerat.
-			$identityNumberValidated = TRUE;
-		}
+		$ret = "
+			<h1>Add member</h1>
+			<form METHOD='post' action=''>
+				<fieldset>
+					<legend>Add new member</legend>";
+					
+		// Loopar igenom messages-arrayen och skriver ut meddelanden.
+		$ret .= $this->showMessages();
 		
-		if($firstNameValidated === TRUE && $lastNameValidated === TRUE &&	$identityNumberValidated === TRUE)
-		{
-			return TRUE;
-		}
+		$ret .= "
+					<input type='hidden' name='addmember'>
+					<div>
+						<label for='memberFirstName'>First name: </label>
+						<input type='text' name='memberFirstName' id='memberFirstName' value='" . $firstName . "'/>
+					</div>
+					<div>
+						<label for='memberLastName'>Last name: </label>
+						<input type='text' name='memberLastName' id='memberLastName' value='" . $lastName . "'/>
+					</div>
+					<div>
+						<label for='memberIdentityNumber'>Personal identity number: </label>
+						<input type='text' name='memberIdentityNumber' id='memberIdentityNumber' value='" . $identityNumber . "'/>
+					</div>
+					<div>
+						<input type='submit' id='confirmAdd' name='confirmAdd' value='Confirm'/>
+					</div>
+				</fieldset>
+			</form>";
+			
+		return $ret;
 	}
 
 	public function addMessage($message) {
 		array_push($this->messages, $message);
+	}
+	
+	public function setSuccessMessage() {
+		$this->addMessage("Operation was successful.");
 	}
 	
 	private function showMessages() {

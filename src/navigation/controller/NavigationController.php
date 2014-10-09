@@ -21,7 +21,18 @@ class NavigationController
 				case NavigationView::$actionMember:
 					
 					$controller = new MemberController();
-					return $controller->showMember();
+					$result = $controller->showMember();
+					if($result === self::$operationSuccess) {
+						return $controller->showMember(self::$operationSuccess);
+					}
+					return $result;
+					break;
+				
+				case NavigationView::$actionAddMember:
+					
+					$controller = new MemberController();
+					$result = $controller->showMember();
+					return $result;
 					break;
 					
 				case NavigationView::$actionBoat:
@@ -35,11 +46,19 @@ class NavigationController
 					return $result;
 					break;
 					
+				case NavigationView::$actionAddBoat:
+					
+					$controller = new BoatController();
+					$result = $controller->showBoat();
+					return $result;
+					break;
+					
 				case NavigationView::$actionList:
 				default:
 					
 					$controller = new ListController();
-					return $controller->showList();
+					$result = $controller->showList(); 
+					return $result;
 					
 					break;
 				

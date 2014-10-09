@@ -8,11 +8,11 @@ class Member {
 	private $identityNumber;
 	private $boats;
 	
-	public function __construct($id, $firstName, $lastName, $identityNumber, $boats) {
-		self::validateId($id);
-		self::validateName($firstName);
-		self::validateName($lastName);
-		self::validateIdentityNumber($identityNumber);
+	public function __construct($id, $firstName, $lastName, $identityNumber, $boats = NULL) {
+		$this->validateId($id);
+		$this->validateName($firstName);
+		$this->validateName($lastName);
+		$this->validateIdentityNumber($identityNumber);
 		
 		$this->id = $id;
 		$this->firstName = $firstName;
@@ -45,19 +45,19 @@ class Member {
 		return $this->boats;
 	}
 
-	static public function validateId($id) {
-		if(!isset($id) || !is_numeric($id) || $id < 1 || $id > 99999999999) {
+	private function validateId($id) {
+		if(!isset($id) || !is_numeric($id) || $id < 0 || $id > 99999999999) {
 			throw new ValidationException("Bad memberID.");
 		}
 	}
 	
-	static public function validateName($name) {
+	private function validateName($name) {
 		if(!isset($name) || $name = "" || strlen($name) < 2 || strlen($name) > 30) {
 			throw new ValidationException("Bad member name.");
 		}
 	}
 	
-	static public function validateIdentityNumber($iNumber) {
+	private function validateIdentityNumber($iNumber) {
 		if(!preg_match("/^\d{6}\-\d{4}$/", $iNumber)) {
 			throw new ValidationException("Bad member identity number.");
 		}

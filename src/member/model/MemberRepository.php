@@ -29,6 +29,11 @@ class MemberRepository extends Repository {
 			$query = $db -> prepare($sql);
 			$query -> execute($params);
 			
+			$memberID = $db->lastInsertId();
+			
+			$member = $this->getMemberAndBoats($memberID);
+			return $member;
+			
 		} catch (PDOException $e) {
 			die('Nåt gick åt helvete med databasen yo!');
 		}
@@ -38,7 +43,7 @@ class MemberRepository extends Repository {
 		try {
 			$db = $this -> connection();
 
-			$sql = "UPDATE" . self::$dbTable . " SET " . self::$firstName . "=?, " . self::$lastName . "=?, " . self::$identityNumber . "=? WHERE " . self::$id ."=?";
+			$sql = "UPDATE " . self::$dbTable . " SET " . self::$firstName . "=?, " . self::$lastName . "=?, " . self::$identityNumber . "=? WHERE " . self::$id ."=?";
 			$params = array($member -> getFirstName(), $member -> getLastName(), $member -> getIdentityNumber(), $member -> getID());
 
 			$query = $db -> prepare($sql);

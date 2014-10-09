@@ -44,7 +44,7 @@ class BoatRepository extends Repository {
 			$query = $db -> prepare($sql);
 			$query -> execute($params);
 		} catch (PDOException $e) {
-			die($e->getMessage());
+			die('Nåt gick åt helvete med databasen yo!');
 		}
 	}
 	

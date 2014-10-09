@@ -19,33 +19,55 @@ Class MemberController {
 	
 	public function showMember($operationSuccess = false)
 	{
+		if($operationSuccess) {
+			$this->memberView->setSuccessMessage();
+		}
+		
+		if($this->memberView->didUserSubmitAddForm())
+		{
+			try
+			{
+				$newMember = new Member(0, $this->memberView->getFirstName(), $this->memberView->getLastName(), $this->memberView->getIdentityNumber());
+				$member = $this->memberRepository->add($newMember);
+				$this->memberView->setSuccessMessage();
+				return $this->memberView->showMember($member);
+			}
+			catch(Exception $e)
+			{
+				$this->memberView->addMessage($e->getMessage());
+				return $this->memberView->addMember();
+			}
+		 	
+		}
+		
+		if($this->memberView->didUserPressAdd()) {
+			return $this->memberView->addMember();
+		}
+		
 		$memberID = $this->memberView->getMemberID();
 		$member = $this->memberRepository->getMemberAndBoats($memberID);
 		
-		if($operationSuccess) {
-			$this->memberView->addMessage("Operation was successful.");
+		if($this->memberView->didUserSubmitEditForm())
+		{
+			try
+			{
+				$newMember = new Member($this->memberView->getMemberID(), $this->memberView->getFirstName(), $this->memberView->getLastName(), $this->memberView->getIdentityNumber());
+				$this->memberRepository->update($newMember);
+				$this->memberView->setSuccessMessage();
+				$member = $this->memberRepository->getMemberAndBoats($newMember->getID());
+				return $this->memberView->showMember($member);
+			}
+			catch(Exception $e)
+			{
+				$this->memberView->addMessage($e->getMessage());
+				return $this->memberView->editMember($member);
+			}
+		 	
 		}
 		
 		if($this->memberView->didUserPressEdit())
 		{
-			if($this->memberView->didUserSubmitForm())
-			{
-				try
-				{
-					$this->memberView->validateUserInput($member);
-					// SPARA ANVÄNDAREN.
-					return "pop";
-				}
-				catch(Exception $e)
-				{
-					
-				}
-			 	return $this->memberView->editMember($member);
-			}
-			else
-			{
-				return $this->memberView->editMember($member);
-			}
+			return $this->memberView->editMember($member);
 		}
 		
 		return $this->memberView->showMember($member);
