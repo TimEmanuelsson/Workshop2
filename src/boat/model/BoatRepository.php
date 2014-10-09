@@ -19,6 +19,21 @@ class BoatRepository extends Repository {
 		$this->boatTypeRepository = new BoatTypeRepository();
 	}
 
+	public function delete($id) {
+		try {
+			$db = $this -> connection();
+
+			$sql = "DELETE FROM " . self::$dbTable . "WHERE " . self::$id ."=?";
+			$params = array($boat->getID());
+
+			$query = $db -> prepare($sql);
+			$query -> execute($params);
+			
+		} catch (PDOException $e) {
+			die('Nåt gick åt helvete med databasen yo!');
+		}
+	}
+
 	public function add(Boat $boat) {
 		try {
 			$db = $this -> connection();
