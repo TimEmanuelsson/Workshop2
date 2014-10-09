@@ -51,7 +51,7 @@ Class MemberView {
 	public function showMember($member)
 	{
 		$contentString = "
-			<h4>Member Information <a href='?member=" . $member->getID() . "&edit'>Edit</a></h4>
+			<h4>Member Information <a href='?member=" . $member->getID() . "&edit'>Edit</a> <a href='?member=" . $member->getID() . "&delete'>Delete</a></h4>
 			<ul>
 				<li>MemberID: " . $member->getID() . "</li>
 				<li>Personal Identity Number: " . $member->getIdentityNumber() . "</li>
@@ -68,7 +68,8 @@ Class MemberView {
 		{
 			foreach ($member->getBoats() as $boat)
 			{
-				$contentString .= "<li>Boat type: " . utf8_encode($boat->getBoatType()) . ". Boat length: " . $boat->getLength() . " <a href='?member=" . $member->getID() . "&boat=" . $boat->getID() . "&edit'>Edit</a></li>";
+				$contentString .= "<li>Boat type: " . utf8_encode($boat->getBoatType()) . ". Boat length: " . $boat->getLength() . " 
+				<a href='?member=" . $member->getID() . "&boat=" . $boat->getID() . "&edit'>Edit</a> <a href='?member=" . $member->getID() . "&boat=" . $boat->getID() . "&delete'>Delete</a></li>";
 			}
 		}
 		

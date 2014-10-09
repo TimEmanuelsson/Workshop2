@@ -58,8 +58,7 @@ Class ListView {
 				$contentString .= '<ul>';
 
 				foreach ($member->getBoats() as $boat) {
-					$contentString .= "<li>Boat type: " . utf8_encode($boat->getBoatType()) . ". Boat length: " . $boat->getLength() . "
-					<a href='?boat=" . $boat->getID() . "&edit'>Edit</a></li>";
+					$contentString .= "<li>Boat type: " . utf8_encode($boat->getBoatType()) . ". Boat length: " . $boat->getLength() . "</li>";
 				}
 				$contentString .= '</ul><br>';
 			} else {

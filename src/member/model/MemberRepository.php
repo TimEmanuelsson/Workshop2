@@ -126,6 +126,7 @@ class MemberRepository extends Repository {
 		}
 	}
 */
+	/*
 	public function delete(Member $member) {
 		try {
 			$db = $this -> connection();
@@ -140,6 +141,7 @@ class MemberRepository extends Repository {
 			die('Fel när medlemmen skulle raderas.');
 		}
 	}
+	*/
 /*
 	public function query($sql, $params = NULL) {
 		try {
@@ -167,6 +169,7 @@ class MemberRepository extends Repository {
 		}
 	}
 */
+
 
 	public function getAllMembersAndBoats() {
 		try {
