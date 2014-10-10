@@ -1,19 +1,25 @@
 <?php
 
-class BoatType {
+class BoatType
+{
 	private $id;
 	private $boatType;
 	
-	public function __construct($id, $boatType) {
+	public function __construct($id, $boatType)
+	{
 		$this->id = $id;
 		$this->boatType = $boatType;
 	}
 	
-	public function getID() {
+	// Hämtar båttypID:t.
+	public function getID()
+	{
 		return $this->id;
 	}
 	
-	public function getBoatType() {
+	// Hämtar båttypen.
+	public function getBoatType()
+	{
 		return $this->boatType;
 	}
 }

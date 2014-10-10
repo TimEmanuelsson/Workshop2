@@ -9,40 +9,45 @@ class BoatTypeRepository extends Repository {
 	
 	public static $dbTable = 'boattype';
 	
-	public function getBoatTypeByID($boatTypeID) {
+	// Hämtar en båttyp med specifikt ID.
+	public function getBoatTypeByID($boatTypeID)
+	{
 		$db = $this -> connection();
 		
-			$sql = "SELECT * FROM " . self::$dbTable . " WHERE " . self::$id . " = ?";
-			$params = array($boatTypeID);
+		$sql = "SELECT * FROM " . self::$dbTable . " WHERE " . self::$id . " = ?";
+		$params = array($boatTypeID);
 
-			$query = $db -> prepare($sql);
-			$query -> execute($params);
+		$query = $db -> prepare($sql);
+		$query -> execute($params);
 
-			$result = $query -> fetch();
+		$result = $query -> fetch();
+		
+		$boatType = new BoatType($result[self::$id], $result[self::$boatType]);
 			
-			$boatType = new BoatType($result[self::$id], $result[self::$boatType]);
-			
-			return $boatType;
+		return $boatType;
 	}
 	
-	public function getAllBoatTypes() {
+	// Hämtar alla båttyper.
+	public function getAllBoatTypes()
+	{
 		$db = $this -> connection();
 		
-			$sql = "SELECT * FROM " . self::$dbTable;
-			$params = array();
+		$sql = "SELECT * FROM " . self::$dbTable;
+		$params = array();
 
-			$query = $db -> prepare($sql);
-			$query -> execute($params);
+		$query = $db -> prepare($sql);
+		$query -> execute($params);
 
-			$result = $query -> fetchAll();
+		$result = $query -> fetchAll();
+		
+		$boatTypes = array();
+		
+		foreach($result as $row)
+		{
+			$boatType = new BoatType($row[self::$id], $row[self::$boatType]);
+			$boatTypes[] = $boatType;
+		}
 			
-			$boatTypes = array();
-			
-			foreach($result as $row) {
-				$boatType = new BoatType($row[self::$id], $row[self::$boatType]);
-				$boatTypes[] = $boatType;
-			}
-			
-			return $boatTypes;
+		return $boatTypes;
 	}
 }

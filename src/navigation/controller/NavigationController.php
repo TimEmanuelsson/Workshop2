@@ -93,7 +93,9 @@ class NavigationController
 		}
 		catch (Exception $e)
 		{
-			echo $e;
+			$controller = new ListController();
+			$result = $controller->showList(false, true);
+			return $result;
 		}
 	}
 }

@@ -4,7 +4,8 @@ require_once('Boat.php');
 require_once ('./src/navigation/model/Repository.php');
 require_once('./src/boat/model/BoatTypeRepository.php');
 
-class BoatRepository extends Repository {
+class BoatRepository extends Repository
+{
 	
 	public static $id = 'ID';
 	public static $boatTypeID = 'boatTypeID';
@@ -15,27 +16,16 @@ class BoatRepository extends Repository {
 	
 	private $boatTypeRepository;
 	
-	public function __construct() {
+	public function __construct()
+	{
 		$this->boatTypeRepository = new BoatTypeRepository();
 	}
-
-	public function delete($id) {
-		try {
-			$db = $this -> connection();
-
-			$sql = "DELETE FROM " . self::$dbTable . " WHERE " . self::$id ."=?";
-			$params = array($id);
-
-			$query = $db -> prepare($sql);
-			$query -> execute($params);
-			
-		} catch (PDOException $e) {
-			throw new Exception('Nåt gick åt helvete med databasen yo!');
-		}
-	}
-
-	public function add(Boat $boat) {
-		try {
+	
+	// Lägger till en ny båt i databasen.
+	public function add(Boat $boat)
+	{
+		try
+		{
 			$db = $this -> connection();
 
 			$sql = "INSERT INTO " . self::$dbTable . " (" . self::$boatTypeID . ", " . self::$memberID . ", " . self::$length . ") VALUES (?, ?, ?)";
@@ -44,13 +34,38 @@ class BoatRepository extends Repository {
 			$query = $db -> prepare($sql);
 			$query -> execute($params);
 			
-		} catch (PDOException $e) {
+		}
+		catch (PDOException $e)
+		{
 			throw new Exception('Nåt gick åt helvete med databasen yo!');
 		}
 	}
+	
+	// Tar bort en båt med specifikt ID ur databasen.
+	public function delete($id)
+	{
+		try
+		{
+			$db = $this -> connection();
 
-	public function update(Boat $boat) {
-		try {
+			$sql = "DELETE FROM " . self::$dbTable . " WHERE " . self::$id ."=?";
+			$params = array($id);
+
+			$query = $db -> prepare($sql);
+			$query -> execute($params);
+			
+		}
+		catch (PDOException $e)
+		{
+			throw new Exception('Nåt gick åt helvete med databasen yo!');
+		}
+	}
+	
+	// Uppdaterar en specifik båt.
+	public function update(Boat $boat)
+	{
+		try
+		{
 			$db = $this -> connection();
 
 			$sql = "UPDATE " . self::$dbTable . " SET " . self::$boatTypeID . "=?, " . self::$memberID . "=?, " . self::$length . "=? WHERE " . self::$id ."=?";
@@ -58,12 +73,16 @@ class BoatRepository extends Repository {
 
 			$query = $db -> prepare($sql);
 			$query -> execute($params);
-		} catch (PDOException $e) {
+		}
+		catch (PDOException $e)
+		{
 			throw new Exception('Nåt gick åt helvete med databasen yo!');
 		}
 	}
 	
-	public function getBoatsByMember($memberID) {
+	// Hämtar alla båter som ägs av en specifik medlem.
+	public function getBoatsByMember($memberID)
+	{
 		$db = $this -> connection();
 		$boats = array();
 	
@@ -75,7 +94,8 @@ class BoatRepository extends Repository {
 
 		$result = $query -> fetchAll();
 		
-		foreach($result as $boat) {
+		foreach($result as $boat)
+		{
 			$boatType = $this->boatTypeRepository->getBoatTypeByID($boat[self::$boatTypeID]);
 			$bt = new Boat($boat[self::$id], $boat[self::$boatTypeID], $boat[self::$memberID], $boat[self::$length], $boatType);
 			$boats[] = $bt;
@@ -84,7 +104,9 @@ class BoatRepository extends Repository {
 		return $boats;
 	}
 	
-	public function getBoatByID($boatID) {
+	// Hämtar en båt med specifikt ID.
+	public function getBoatByID($boatID)
+	{
 		$db = $this -> connection();
 	
 		$sql = "SELECT * FROM " . self::$dbTable . " WHERE " . self::$id . " = ?";
