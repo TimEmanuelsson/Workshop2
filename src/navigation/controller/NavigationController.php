@@ -2,7 +2,7 @@
 
 require_once('./src/navigation/view/NavigationView.php');
 require_once('./src/member/controller/MemberController.php');
-require_once('src/boat/controller/BoatController.php');
+require_once('./src/boat/controller/BoatController.php');
 require_once('./src/list/controller/ListController.php');
 
 class NavigationController
@@ -21,9 +21,9 @@ class NavigationController
 				case NavigationView::$actionMember:
 					
 					$controller = new MemberController();
-					$result = $controller->showMember();
+					$result = $controller->memberControl();
 					if($result === self::$operationSuccess) {
-						return $controller->showMember(self::$operationSuccess);
+						return $controller->memberControl(self::$operationSuccess);
 					}
 					return $result;
 					break;
@@ -31,17 +31,17 @@ class NavigationController
 				case NavigationView::$actionAddMember:
 					
 					$controller = new MemberController();
-					$result = $controller->showMember();
+					$result = $controller->memberControl();
 					return $result;
 					break;
 					
 				case NavigationView::$actionDeleteMember:
 					
 					$controller = new MemberController();
-					$result = $controller->showMember();
+					$result = $controller->memberControl();
 					if($result === self::$operationSuccess) {
 						$controller = new ListController();
-						$result = $controller->showList(self::$operationSuccess); 
+						$result = $controller->listControl(self::$operationSuccess); 
 					}
 					return $result;
 					break;
@@ -49,10 +49,10 @@ class NavigationController
 				case NavigationView::$actionBoat:
 					
 					$controller = new BoatController();
-					$result = $controller->showBoat();
+					$result = $controller->boatControl();
 					if($result === self::$operationSuccess) {
 						$controller = new MemberController();
-						return $controller->showMember(self::$operationSuccess);
+						return $controller->memberControl(self::$operationSuccess);
 					}
 					return $result;
 					break;
@@ -60,10 +60,10 @@ class NavigationController
 				case NavigationView::$actionAddBoat:
 					
 					$controller = new BoatController();
-					$result = $controller->showBoat();
+					$result = $controller->boatControl();
 					if($result === self::$operationSuccess) {
 						$controller = new MemberController();
-						return $controller->showMember(self::$operationSuccess);
+						return $controller->memberControl(self::$operationSuccess);
 					}
 					return $result;
 					break;
@@ -71,20 +71,20 @@ class NavigationController
 				case NavigationView::$actionDeleteBoat:
 					
 					$controller = new BoatController();
-					$result = $controller->showBoat();
+					$result = $controller->boatControl();
 					if($result === self::$operationSuccess) {
 						$controller = new MemberController();
-						return $controller->showMember(self::$operationSuccess);
+						return $controller->memberControl(self::$operationSuccess);
 					}
 					$controller = new MemberController();
-					return $controller->showMember();
+					return $controller->memberControl();
 					break;
 					
 				case NavigationView::$actionList:
 				default:
 					
 					$controller = new ListController();
-					$result = $controller->showList(); 
+					$result = $controller->listControl(); 
 					return $result;
 					
 					break;
@@ -94,7 +94,7 @@ class NavigationController
 		catch (Exception $e)
 		{
 			$controller = new ListController();
-			$result = $controller->showList(false, true);
+			$result = $controller->listControl(false, true);
 			return $result;
 		}
 	}

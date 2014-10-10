@@ -18,7 +18,7 @@ Class MemberController
 		$this->memberView = new MemberView($this->memberRepository, $this->boatRepository);
 	}
 	
-	public function showMember($operationSuccess = FALSE)
+	public function memberControl($operationSuccess = FALSE)
 	{
 		// Sätter ett rättmeddelande ifall en handling lyckats.
 		if($operationSuccess)
