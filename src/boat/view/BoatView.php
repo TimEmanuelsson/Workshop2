@@ -1,53 +1,65 @@
 <?php
 require_once('./src/boat/model/BoatTypeRepository.php');
 
-Class BoatView {
+Class BoatView
+{
 	
 	private $boatTypeRepository;
 	private $errorMessage;
 	
-	// string dependencies
+	// Strängberoenden.
 	private $boatIDLocation = "boat";
 	private $memberIDLocation = "member";
 	private $boatTypeLocation = "boatType";
 	private $boatLengthLocation = "boatLength";
-	private $editBoatLocation = "editboat";				// Also exists in memberView.php. If changed here, change there too.
-	private $addBoatLocation = "addboat";		// Also exists in memberView.php. If changed here, change there too.
-	private $deleteBoatLocation = "deleteboat";	// Also exists in memberView.php. If changed here, change there too.
+	private $editBoatLocation = "editboat";		// Finns även i memberView.php. Om ändringar sker här, ändra där med.
+	private $addBoatLocation = "addboat";		// Finns även i memberView.php. Om ändringar sker här, ändra där med.
+	private $deleteBoatLocation = "deleteboat";	// Finns även i memberView.php. Om ändringar sker här, ändra där med.
 	private $submitEditBoatLocation = "confirmEditBoat";
 	private $submitAddBoatLocation = "confirmAddBoat";
 	
-	public function __construct() {
+	public function __construct()
+	{
 		$this->boatTypeRepository = new BoatTypeRepository();
 	}
-
-	public function getBoatID() {
+	
+	// Hämtar båtID:t.
+	public function getBoatID()
+	{
 		return $_REQUEST[$this->boatIDLocation];
 	}
 	
+	// Hämtar medlemsID:t.
 	public function getMemberID()
 	{
 		return $_REQUEST[$this->memberIDLocation];
 	}
 	
+	// Hämtar båttypen.
 	public function getBoatType()
 	{
 		return $_POST[$this->boatTypeLocation];
 	}
 	
+	// Hämtar båtlängden.
 	public function getLength()
 	{
 		return $_POST[$this->boatLengthLocation];
 	}
 	
-	public function didUserPressEdit() {
+	// Kontrollerar om användaren klickat på "Edit"-länken.
+	public function didUserPressEdit()
+	{
 		return isset($_REQUEST[$this->editBoatLocation]);
 	}
 	
-	public function didUserPressAdd() {
+	// Kontrollerar om användaren klickat på "Add"-länken.
+	public function didUserPressAdd()
+	{
 		return isset($_REQUEST[$this->addBoatLocation]);
 	}
 	
+	// Kontrollerar om användaren klickat på "Delete"-länken.
 	public function didUserPressDelete()
 	{
 		return isset($_GET[$this->deleteBoatLocation]);
@@ -63,7 +75,8 @@ Class BoatView {
 		return isset($_POST[$this->submitAddBoatLocation]);
 	}
 
-	public function showBoat($boat) {
+	public function showBoat($boat)
+	{
 		$contentString = "
 			<h4>Boat Information</h4>
 			<ul>
@@ -79,9 +92,10 @@ Class BoatView {
 	{
 		$errorMessage = '';
 		$boatTypes = $this->boatTypeRepository->getAllBoatTypes();
-		
 		$boatTypeSelect = "<select name='$this->boatTypeLocation' id='$this->boatTypeLocation'>";
-		foreach($boatTypes as $boatType){
+		
+		foreach($boatTypes as $boatType)
+		{
 			$boatTypeSelect .= "<option value='" . $boatType->getID() . "'>" . utf8_encode($boatType->getBoatType()) . "</option>";
 		}
 		
@@ -121,13 +135,16 @@ Class BoatView {
 	{
 		$errorMessage = '';
 		$boatTypes = $this->boatTypeRepository->getAllBoatTypes();
-		
 		$boatTypeSelect = "<select name='$this->boatTypeLocation' id='$this->boatTypeLocation'>";
-		foreach($boatTypes as $boatType){
+		
+		foreach($boatTypes as $boatType)
+		{
 			$selected = "";
-			if($boat->getBoatTypeID() == $boatType->getID()) {
+			if($boat->getBoatTypeID() == $boatType->getID())
+			{
 				$selected = " selected";
 			}
+			
 			$boatTypeSelect .= "<option value='" . $boatType->getID() . "'$selected>" . utf8_encode($boatType->getBoatType()) . "</option>";
 		}
 		
