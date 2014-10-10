@@ -88,6 +88,10 @@ Class ListView {
 		$this->addMessage("Operation was successful.");
 	}
 	
+	public function setErrorMessage() {
+		$this->addMessage("An unknown error has occured!");
+	}
+	
 	private function showMessages() {
 		$ret = "";
 		// Loopar igenom messages-arrayen och skriver ut meddelanden.

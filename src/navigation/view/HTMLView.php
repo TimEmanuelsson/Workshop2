@@ -4,8 +4,8 @@
 class HTMLView {
 	public function echoHTML($body) {
 		if($body == NULL){
-			throw new Exception("Body does not allow null!");
-			
+			$body = "An unknown error has occured!<br />
+			<a href='?CompactList'>Click here to return to start page</a>";
 		}
 			echo "
 					<!DOCTYPE html>

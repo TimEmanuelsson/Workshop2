@@ -18,12 +18,17 @@ class ListController
 	}
 	
 	// Visar en vald lista.
-	public function showList($operationSuccess = FALSE)
+	public function showList($operationSuccess = FALSE, $fatalError = FALSE)
 	{
 		// Sätter ett rättmeddelande ifall en handling lyckats.
 		if($operationSuccess)
 		{
 			$this->listView->setSuccessMessage();
+		}
+		
+		if($fatalError)
+		{
+			$this->listView->setErrorMessage();
 		}
 			
 		// Visar den detaljerade listan. Annars visar den kompakta listan.
