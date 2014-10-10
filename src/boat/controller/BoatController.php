@@ -15,7 +15,7 @@ Class BoatController
 		$this->boatView = new boatView();
 	}
 
-	public function showBoat()
+	public function boatControl()
 	{
 		// Har användaren klickat på submit i "Add"-formuläret...
 		if($this->boatView->didUserSubmitAddForm())

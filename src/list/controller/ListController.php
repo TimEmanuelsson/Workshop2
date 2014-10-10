@@ -18,7 +18,7 @@ class ListController
 	}
 	
 	// Visar en vald lista.
-	public function showList($operationSuccess = FALSE, $fatalError = FALSE)
+	public function listControl($operationSuccess = FALSE, $fatalError = FALSE)
 	{
 		// Sätter ett rättmeddelande ifall en handling lyckats.
 		if($operationSuccess)
