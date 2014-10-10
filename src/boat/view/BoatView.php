@@ -1,4 +1,5 @@
 <?php
+
 require_once('./src/boat/model/BoatTypeRepository.php');
 
 Class BoatView
@@ -9,7 +10,7 @@ Class BoatView
 	
 	// Strängberoenden.
 	private $boatIDLocation = "boat";
-	private $memberIDLocation = "member";
+	private $memberIDLocation = "member"; 		// Finns även i memberView.php. Om ändringar sker här, ändra där med.
 	private $boatTypeLocation = "boatType";
 	private $boatLengthLocation = "boatLength";
 	private $editBoatLocation = "editboat";		// Finns även i memberView.php. Om ändringar sker här, ändra där med.
@@ -65,16 +66,19 @@ Class BoatView
 		return isset($_GET[$this->deleteBoatLocation]);
 	}
 	
+	// Kontrollerar om användaren skickat in "Edit"-formuläret.
 	public function didUserSubmitEditForm()
 	{
 		return isset($_POST[$this->submitEditBoatLocation]);
 	}
 	
+	// Kontrollerar om användaren skickat in "Add"-formuläret.
 	public function didUserSubmitAddForm()
 	{
 		return isset($_POST[$this->submitAddBoatLocation]);
 	}
-
+	
+	// Visar en specifik båt.
 	public function showBoat($boat)
 	{
 		$contentString = "
@@ -88,6 +92,7 @@ Class BoatView
 		return $contentString;
 	}
 	
+	// Visar formuläret för att lägga till en ny båt.
 	public function addBoat()
 	{
 		$errorMessage = '';
@@ -106,6 +111,7 @@ Class BoatView
 			$errorMessage = "<p>$this->errorMessage</p>";
 		}
 		
+		// HTML-strängen som skall returneras till HTMLView-klassen.
 		$ret = "
 			<h1>Add boat</h1>
 			<form action='?$this->memberIDLocation=" . $_REQUEST[$this->memberIDLocation] . "' method='post'>
@@ -131,6 +137,7 @@ Class BoatView
 		return $ret;
 	}
 	
+	// Visar redigeringsformuläret för en specifik båt.
 	public function editBoat($boat)
 	{
 		$errorMessage = '';
@@ -155,6 +162,7 @@ Class BoatView
 			$errorMessage = "<p>$this->errorMessage</p>";
 		}
 		
+		// HTML-strängen som skall returneras till HTMLView-klassen.
 		$ret = "
 			<h1>Edit boat - " . $boat->getID() . "</h1>
 			<h4>Edit Boat information</h4>
@@ -182,14 +190,9 @@ Class BoatView
 		return $ret;
 	}
 	
+	// Sätter felmeddelanden.
 	public function setError($errorMessage)
 	{
 		$this->errorMessage = $errorMessage;
 	}
-	
-	
-	
-	
-	
-	
 }
