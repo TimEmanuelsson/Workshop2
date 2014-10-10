@@ -1,6 +1,7 @@
 <?php
 
-Class MemberView {
+Class MemberView
+{
 
 	private $memberRepository;
 	private $boatRepository;
@@ -13,47 +14,64 @@ Class MemberView {
 		$this->messages = array();
 	}
 	
+	// Hämtar medlemsID:t.
 	public function getMemberID()
 	{
 		return $_REQUEST['member'];
 	}
 	
-	public function getFirstName() {
+	// Hämtar medlemmens förnamn.
+	public function getFirstName()
+	{
 		return $_POST['memberFirstName'];
 	}
 	
-	public function getLastName() {
+	// Hämtar medlemmens förnamn.
+	public function getLastName()
+	{
 		return $_POST['memberLastName'];
 	}
 	
-	public function getIdentityNumber() {
+	// Hämtar medlemmens personnummer.
+	public function getIdentityNumber()
+	{
 		return $_POST['memberIdentityNumber'];
 	}
 	
+	// Kontrollerar om användaren klickat på "Edit"-länken.
 	public function didUserPressEdit()
 	{
 		return isset($_REQUEST['edit']);
 	}
 	
-	public function didUserPressAdd() {
+	// Kontrollerar om användaren klickat på "Add"-länken.
+	public function didUserPressAdd()
+	{
 		return isset($_REQUEST['addmember']);
 	}
 	
-	public function didUserPressDelete() {
+	// Kontrollerar om användaren klickat på "Delete"-länken.
+	public function didUserPressDelete()
+	{
 		return isset($_GET['deletemember']);
 	}
 	
+	// Kontrollerar om användaren skickat in "Edit"-formuläret.
 	public function didUserSubmitEditForm()
 	{
 		return isset($_POST['confirmEditMember']);
 	}
 	
-	public function didUserSubmitAddForm() {
+	// Kontrollerar om användaren skickat in "Add"-formuläret.
+	public function didUserSubmitAddForm()
+	{
 		return isset($_POST['confirmAddMember']);
 	}
 	
+	// Visar specifik medlem.
 	public function showMember($member)
 	{
+		// HTML-sträng för medlemssidan.
 		$contentString = "
 			<h4>Member Information <a href='?member=" . $member->getID() . "&edit'>Edit</a> <a href='?member=" . $member->getID() . "&deletemember'>Delete</a></h4>
 			<ul>
@@ -64,11 +82,12 @@ Class MemberView {
 			<ul>
 				";
 		
+		// Finns det inga båtar registrerade på medlemmen visas ett särskilt meddelande.
 		if(count($member->getBoats()) <= 0 || $member->getBoats() == NULL)
 		{
 			$contentString .= "<li>" . utf8_encode($member->getFirstName()) . " does not have any registered boats</li>";
 		}
-		else
+		else // Annars läggs alla medlemmens båtar till i HTML-strängen.
 		{
 			foreach ($member->getBoats() as $boat)
 			{
@@ -77,8 +96,10 @@ Class MemberView {
 			}
 		}
 		
+		// Stänger punktlistan i HTML-strängen.
 		$contentString .= "</ul>";
 		
+		// Strängen som skall returneras till HTMLView-klassen.
 		$ret = "
 				<h1>Specific Member - " . utf8_encode($member->getFirstName()) . " " . utf8_encode($member->getLastName()) . "</h1>
 				" . $this->showMessages() . "
@@ -89,27 +110,22 @@ Class MemberView {
 		return $ret;
 	}
 	
+	// Visar redigeringsformuläret för en specifik medlem.
 	public function editMember($member)
 	{
 		$firstName = utf8_encode($member->getFirstName());
 		$lastName = utf8_encode($member->getLastName());
 		$identityNumber = $member->getIdentityNumber();
 		
-		if(isset($_POST['memberFirstName']) && $_POST['memberFirstName'] != '')
+		// Har användaren skickat in formuläret tidigare får variablerna inputvärdet, ifall det gått igenom valideringen.
+		if($this->didUserSubmitEditForm())
 		{
-			$firstName = $_POST['memberFirstName'];
+			$firstName = $this->checkPost('memberFirstName');
+			$lastName = $this->checkPost('memberLastName');
+			$identityNumber = $this->checkPost('memberIdentityNumber');
 		}
 		
-		if(isset($_POST['memberLastName']) && $_POST['memberLastName'] != '')
-		{
-			$lastName = $_POST['memberLastName'];
-		}
-		
-		if(isset($_POST['memberIdentityNumber']) && $_POST['memberIdentityNumber'] != '')
-		{
-			$identityNumber = $_POST['memberIdentityNumber'];
-		}
-			
+		// HTML-strängen som skall returneras till HTMLView-klassen.	
 		$ret = "
 			<h1>Edit member - " . utf8_encode($member->getFirstName()) . " " . utf8_encode($member->getLastName()) . "</h1>
 			<form METHOD='post' action='?member=" . $_REQUEST['member'] . "'>
@@ -143,26 +159,17 @@ Class MemberView {
 		return $ret;
 	}
 	
+	// Visar formulär för att lägga till en ny medlem.
 	public function addMember()
 	{
 		$firstName = "";
 		$lastName = "";
 		$identityNumber = "";
 		
-		if(isset($_POST['memberFirstName']) && $_POST['memberFirstName'] != '')
-		{
-			$firstName = $_POST['memberFirstName'];
-		}
-		
-		if(isset($_POST['memberLastName']) && $_POST['memberLastName'] != '')
-		{
-			$lastName = $_POST['memberLastName'];
-		}
-		
-		if(isset($_POST['memberIdentityNumber']) && $_POST['memberIdentityNumber'] != '')
-		{
-			$identityNumber = $_POST['memberIdentityNumber'];
-		}
+		// Kontrollerar ifall formuläret redan skickats in.
+		$firstName = $this->checkPost('memberFirstName');
+		$lastName = $this->checkPost('memberLastName');
+		$identityNumber = $this->checkPost('memberIdentityNumber');
 			
 		$ret = "
 			<h1>Add member</h1>
@@ -195,17 +202,33 @@ Class MemberView {
 			
 		return $ret;
 	}
-
-	public function addMessage($message) {
+	
+	// Returnerar värdet i $_POST[] om input klarat validering.
+	private function checkPost($stringName)
+	{
+		if(isset($_POST[$stringName]) && $_POST[$stringName] != '')
+		{
+			return $_POST[$stringName];
+		}
+	}
+	
+	// Lägger till felmeddelanden i $message-arrayen.
+	public function addMessage($message)
+	{
 		array_push($this->messages, $message);
 	}
 	
-	public function setSuccessMessage() {
+	// Lägger till rättmeddelande i $message-arrayen.
+	public function setSuccessMessage()
+	{
 		$this->addMessage("Operation was successful.");
 	}
 	
-	private function showMessages() {
+	// Visar meddelanden.
+	private function showMessages()
+	{
 		$ret = "";
+		
 		// Loopar igenom messages-arrayen och skriver ut meddelanden.
 		foreach ($this->messages as $message)
 		{

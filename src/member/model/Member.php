@@ -1,19 +1,23 @@
 <?php
 require_once('./src/exceptions/ValidationException.php');
 
-class Member {
+class Member
+{
 	private $id;
 	private $firstName;
 	private $lastName;
 	private $identityNumber;
 	private $boats;
 	
-	public function __construct($id, $firstName, $lastName, $identityNumber, $boats = NULL) {
+	public function __construct($id, $firstName, $lastName, $identityNumber, $boats = NULL)
+	{
+		// Validerar indata.
 		$this->validateId($id);
 		$this->validateName($firstName);
 		$this->validateName($lastName);
 		$this->validateIdentityNumber($identityNumber);
 		
+		// Sätter värdet på de privata variablerna.
 		$this->id = $id;
 		$this->firstName = $firstName;
 		$this->lastName = $lastName;
@@ -21,49 +25,68 @@ class Member {
 		$this->boats = $boats;
 	}
 	
-	public function addBoat(Boat $boat) {
+	// Lägger till en båt till medelmmens båt-array.
+	public function addBoat(Boat $boat)
+	{
 		$this->boat[] = $boat;
 	}
 	
-	public function getID() {
+	// Hämtar medlemmens ID.
+	public function getID()
+	{
 		return $this->id;
 	}
 	
-	public function getFirstName() {
+	// Hämtar medlemmens förnamn.
+	public function getFirstName()
+	{
 		return $this->firstName;
 	}
 	
-	public function getLastName() {
+	// Hämtar medlemmens efternamn.
+	public function getLastName()
+	{
 		return $this->lastName;
 	}
 	
-	public function getIdentityNumber() {
+	// Hämtar medlemmens personnummer.
+	public function getIdentityNumber()
+	{
 		return $this->identityNumber;
 	}
 	
-	public function getBoats() {
+	// Hämtar medlemmens båtar.
+	public function getBoats() 
+	{
 		return $this->boats;
 	}
-
-	private function validateId($id) {
-		if(!isset($id) || !is_numeric($id) || $id < 0 || $id > 99999999999) {
+	
+	// Validerar ID:t.
+	private function validateId($id)
+	{
+		if(!isset($id) || !is_numeric($id) || $id < 0 || $id > 99999999999)
+		{
 			throw new ValidationException("Bad memberID.");
 		}
 	}
 	
-	private function validateName($name) {
-		if(!isset($name) || $name = "" || strlen($name) < 2 || strlen($name) > 30) {
+	// Validerar namn-strängar.
+	private function validateName($name)
+	{
+		if(!isset($name) || $name = "" || strlen($name) < 2 || strlen($name) > 30)
+		{
 			throw new ValidationException("Bad member name.");
 		}
 	}
 	
-	private function validateIdentityNumber($iNumber) {
-		if(!preg_match("/^\d{6}\-\d{4}$/", $iNumber)) {
+	// Validerar personnummer.
+	private function validateIdentityNumber($iNumber)
+	{
+		if(!preg_match("/^\d{6}\-\d{4}$/", $iNumber))
+		{
 			throw new ValidationException("Bad member identity number.");
 		}
 	}
-
-
 }
 
 ?>
