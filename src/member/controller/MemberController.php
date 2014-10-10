@@ -73,7 +73,7 @@ Class MemberController
 		$memberID = $this->memberView->getMemberID();
 		$member = $this->memberRepository->getMemberAndBoats($memberID);
 		
-		// Har användaren klickat på submit i "Add"-formuläret...
+		// Har användaren klickat på submit i "Edit"-formuläret...
 		if($this->memberView->didUserSubmitEditForm())
 		{
 			try
