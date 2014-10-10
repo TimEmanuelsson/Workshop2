@@ -5,7 +5,7 @@ class HTMLView {
 	public function echoHTML($body) {
 		if($body == NULL){
 			$body = "An unknown error has occured!<br />
-			<a href='?CompactList'>Click here to return to start page</a>";
+			<a href='?compactlist'>Click here to return to start page</a>";
 		}
 			echo "
 					<!DOCTYPE html>

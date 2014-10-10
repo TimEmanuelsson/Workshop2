@@ -6,6 +6,10 @@ Class ListView
 	private $boatRepository;
 	private $messages;
 	
+	// Istället för strängberoenden
+	private $detailedListLocation = "detailedlist";
+	private $compactListLocation = "compactlist";
+	
 	public function __construct(MemberRepository $memberRepository, BoatRepository $boatRepository)
 	{
 		$this->memberRepository = $memberRepository;
@@ -16,7 +20,7 @@ Class ListView
 	// Kontrollerar ifall användaren klickat på "Show Detailed List"-knappen.
 	public function didUserPressDetailedList()
 	{
-		if(isset($_GET['DetailedList']) == TRUE)
+		if(isset($_GET[$this->detailedListLocation]) == TRUE)
 		{
 			return TRUE;
 		}
@@ -47,7 +51,7 @@ Class ListView
 		$ret = "
 				<h1>Compact List</h1>
 				" . $this->showMessages() . "
-				<a href='?DetailedList'>Show Detailed List</a><br />
+				<a href='?$this->detailedListLocation'>Show Detailed List</a><br />
 				<a href='?addmember'>Add member</a>
 				<ul>$contentString</ul>
 		";
@@ -87,7 +91,7 @@ Class ListView
 		$ret = "
 				<h1>Detailed List</h1>
 				" . $this->showMessages() . "
-				<a href='?CompactList'>Show Compact List</a><br />
+				<a href='?$this->compactListLocation'>Show Compact List</a><br />
 				<a href='?addmember'>Add member</a>
 				<ul>$contentString</ul>
 		";

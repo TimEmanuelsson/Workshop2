@@ -8,7 +8,7 @@ Class MemberView
 	private $messages;
 	
 	// Istället för strängberoenden.
-	private $memberIDLocation = "member";
+	private $memberIDLocation = "member";	// Finns även i boatView.php. Om ändringar sker här, ändra där med.
 	private $memberFirstNameLocation = "memberFirstName";
 	private $memberLastNameLocation = "memberLastName";
 	private $memberIdentityNumberLocation = "memberIdentityNumber";
@@ -17,6 +17,9 @@ Class MemberView
 	private $deleteMemberLocation = "deletemember";
 	private $submitEditMemberLocation = "confirmEditMember";
 	private $submitAddMemberLocation = "confirmAddMember";
+	private $editBoatLocation = "editboat";		// Finns även i boatView.php. Om ändringar sker här, ändra där med.
+	private $addBoatLocation = "addboat";		// Finns även i boatView.php. Om ändringar sker här, ändra där med.
+	private $deleteBoatLocation = "deleteboat";	// Finns även i boatView.php. Om ändringar sker här, ändra där med.
 	
 
 	public function __construct(MemberRepository $memberRepository, BoatRepository $boatRepository)
@@ -90,7 +93,7 @@ Class MemberView
 				<li>MemberID: " . $member->getID() . "</li>
 				<li>Personal Identity Number: " . $member->getIdentityNumber() . "</li>
 			</ul>
-			<h4>" . utf8_encode($member->getFirstName()) . "'s boats <a href='?$this->memberIDLocation=" . $member->getID() . "&addboat'>Add boat</a></h4>
+			<h4>" . utf8_encode($member->getFirstName()) . "'s boats <a href='?$this->memberIDLocation=" . $member->getID() . "&$this->addBoatLocation'>Add boat</a></h4>
 			<ul>
 				";
 		
@@ -104,7 +107,7 @@ Class MemberView
 			foreach ($member->getBoats() as $boat)
 			{
 				$contentString .= "<li>Boat type: " . utf8_encode($boat->getBoatType()) . ". Boat length: " . $boat->getLength() . " 
-				<a href='?$this->memberIDLocation=" . $member->getID() . "&boat=" . $boat->getID() . "&editboat'>Edit</a> <a href='?$this->memberIDLocation=" . $member->getID() . "&boat=" . $boat->getID() . "&deleteboat'>Delete</a></li>";
+				<a href='?$this->memberIDLocation=" . $member->getID() . "&boat=" . $boat->getID() . "&$this->editBoatLocation'>Edit</a> <a href='?$this->memberIDLocation=" . $member->getID() . "&boat=" . $boat->getID() . "&$this->deleteBoatLocation'>Delete</a></li>";
 			}
 		}
 		
@@ -115,8 +118,8 @@ Class MemberView
 		$ret = "
 				<h1>Specific Member - " . utf8_encode($member->getFirstName()) . " " . utf8_encode($member->getLastName()) . "</h1>
 				" . $this->showMessages() . "
-				<a href='?CompactList'>Show Compact List</a>
-				<a href='?DetailedList'>Show Detailed List</a>
+				<a href='?compactlist'>Show Compact List</a>
+				<a href='?detailedlist'>Show Detailed List</a>
 				" . $contentString;
 		
 		return $ret;
