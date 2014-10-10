@@ -30,7 +30,7 @@ class BoatRepository extends Repository {
 			$query -> execute($params);
 			
 		} catch (PDOException $e) {
-			die('Nåt gick åt helvete med databasen yo!');
+			throw new Exception('Nåt gick åt helvete med databasen yo!');
 		}
 	}
 
@@ -45,7 +45,7 @@ class BoatRepository extends Repository {
 			$query -> execute($params);
 			
 		} catch (PDOException $e) {
-			die('Nåt gick åt helvete med databasen yo!');
+			throw new Exception('Nåt gick åt helvete med databasen yo!');
 		}
 	}
 
@@ -59,7 +59,7 @@ class BoatRepository extends Repository {
 			$query = $db -> prepare($sql);
 			$query -> execute($params);
 		} catch (PDOException $e) {
-			die('Nåt gick åt helvete med databasen yo!');
+			throw new Exception('Nåt gick åt helvete med databasen yo!');
 		}
 	}
 	
