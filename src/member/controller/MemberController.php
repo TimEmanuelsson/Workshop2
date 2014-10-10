@@ -18,7 +18,7 @@ Class MemberController
 		$this->memberView = new MemberView($this->memberRepository, $this->boatRepository);
 	}
 	
-	public function showMember($operationSuccess = false)
+	public function showMember($operationSuccess = FALSE)
 	{
 		// Sätter ett rättmeddelande ifall en handling lyckats.
 		if($operationSuccess)
@@ -61,11 +61,11 @@ Class MemberController
 			{
 				//... tar bort vald medlem ur databasen.
 				$this->memberRepository->delete($this->memberView->getMemberID());
-				return true;
+				return TRUE;
 			}
 			catch(Exception $e)
 			{
-				return false;
+				return FALSE;
 			}
 		}
 		

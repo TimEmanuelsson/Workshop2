@@ -17,10 +17,12 @@ class ListController
 		$this->listView = new ListView($this->memberRepository, $this->boatRepository);
 	}
 	
-	// Visar en vald lista
-	public function showList($operationSuccess = false)
+	// Visar en vald lista.
+	public function showList($operationSuccess = FALSE)
 	{
-		if($operationSuccess) {
+		// Sätter ett rättmeddelande ifall en handling lyckats.
+		if($operationSuccess)
+		{
 			$this->listView->setSuccessMessage();
 		}
 			
