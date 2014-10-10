@@ -6,56 +6,61 @@ Class BoatView {
 	private $boatTypeRepository;
 	private $errorMessage;
 	
+	// string dependencies
+	private $boatIDLocation = "boat";
+	private $memberIDLocation = "member";
+	private $boatTypeLocation = "boatType";
+	private $boatLengthLocation = "boatLength";
+	private $editLocation = "edit";
+	private $addBoatLocation = "addboat";
+	private $deleteBoatLocation = "deleteboat";
+	private $submitEditBoatLocation = "confirmEditBoat";
+	private $submitAddBoatLocation = "confirmAddBoat";
+	
 	public function __construct() {
 		$this->boatTypeRepository = new BoatTypeRepository();
 	}
 
 	public function getBoatID() {
-		return $_REQUEST['boat'];
+		return $_REQUEST[$boatIDLocation];
 	}
 	
 	public function getMemberID()
 	{
-		return $_REQUEST['member'];
+		return $_REQUEST[$memberIDLocation];
 	}
 	
 	public function getBoatType()
 	{
-		if(isset($_POST['boatType']) && $_POST['boatType'] != '')
-		{
-			return $_POST['boatType'];
-		}
+		return $_POST[$boatTypeLocation];
 	}
 	
 	public function getLength()
 	{
-		if(isset($_POST['boatLength']) && $_POST['boatLength'] != '')
-		{
-			return $_POST['boatLength'];
-		}
+		return $_POST[$boatLengthLocation];
 	}
 	
 	public function didUserPressEdit() {
-		return isset($_REQUEST['edit']);
+		return isset($_REQUEST[$editLocation]);
 	}
 	
 	public function didUserPressAdd() {
-		return isset($_REQUEST['addboat']);
+		return isset($_REQUEST[$addBoatLocation]);
 	}
 	
 	public function didUserPressDelete()
 	{
-		return isset($_GET['deleteboat']);
+		return isset($_GET[$deleteBoatLocation]);
 	}
 	
 	public function didUserSubmitEditForm()
 	{
-		return isset($_POST['confirmEditBoat']);
+		return isset($_POST[$submitEditBoatLocation]);
 	}
 	
 	public function didUserSubmitAddForm()
 	{
-		return isset($_POST['confirmAddBoat']);
+		return isset($_POST[$submitAddBoatLocation]);
 	}
 
 	public function showBoat($boat) {
@@ -75,7 +80,7 @@ Class BoatView {
 		$errorMessage = '';
 		$boatTypes = $this->boatTypeRepository->getAllBoatTypes();
 		
-		$boatTypeSelect = "<select name='boatType' id='boatType'>";
+		$boatTypeSelect = "<select name='$boatTypeLocation' id='$boatTypeLocation'>";
 		foreach($boatTypes as $boatType){
 			$boatTypeSelect .= "<option value='" . $boatType->getID() . "'>" . utf8_encode($boatType->getBoatType()) . "</option>";
 		}
@@ -89,22 +94,22 @@ Class BoatView {
 		
 		$ret = "
 			<h1>Add boat</h1>
-			<form action='?member=" . $_REQUEST['member'] . "' method='post'>
+			<form action='?$memberIDLocation=" . $_REQUEST[$memberIDLocation] . "' method='post'>
 			<fieldset>
 				<legend>Add new boat</legend>
 				$errorMessage
-				<input type='hidden' name='member' value='" . $_REQUEST['member'] . "'>
-				<input type='hidden' name='addboat'>
+				<input type='hidden' name='$memberIDLocation' value='" . $_REQUEST[$memberIDLocation] . "'>
+				<input type='hidden' name='$addBoatLocation'>
 				<div>
-					<label for='boatType'>Boat type: </label>
+					<label for='$boatTypeLocation'>Boat type: </label>
 					$boatTypeSelect
 				</div>
 				<div>
-					<label for='boatLength'>Boat length: </label>
-					<input type='text' name='boatLength' id='boatLength' value=''><br />
+					<label for='$boatLengthLocation'>Boat length: </label>
+					<input type='text' name='$boatLengthLocation' id='$boatLengthLocation' value=''><br />
 				</div>
 				<div>
-					<input type='submit' name='confirmAddBoat' value='Confirm'>
+					<input type='submit' name='$submitAddBoatLocation' value='Confirm'>
 				</div>
 			</fieldset>
 		";
@@ -117,7 +122,7 @@ Class BoatView {
 		$errorMessage = '';
 		$boatTypes = $this->boatTypeRepository->getAllBoatTypes();
 		
-		$boatTypeSelect = "<select name='boatType' id='boatType'>";
+		$boatTypeSelect = "<select name='$boatTypeLocation' id='$boatTypeLocation'>";
 		foreach($boatTypes as $boatType){
 			$selected = "";
 			if($boat->getBoatTypeID() == $boatType->getID()) {
@@ -136,23 +141,23 @@ Class BoatView {
 		$ret = "
 			<h1>Edit boat - " . $boat->getID() . "</h1>
 			<h4>Edit Boat information</h4>
-			<form action='?member=" . $_REQUEST['member'] . "' method='post'>
+			<form action='?$memberIDLocation=" . $_REQUEST[$memberIDLocation] . "' method='post'>
 			<fieldset>
 				<legend>Edit boat</legend>
 				$errorMessage
-				<input type='hidden' name='member' value='" . $_REQUEST['member'] . "'>
-				<input type='hidden' name='boat' value='" . $boat->getID() . "'>
-				<input type='hidden' name='edit'>
+				<input type='hidden' name='$memberIDLocation' value='" . $_REQUEST[$memberIDLocation] . "'>
+				<input type='hidden' name=$boatIDLocation value='" . $boat->getID() . "'>
+				<input type='hidden' name='$editLocation'>
 				<div>
-					<label for='boatType'>Boat type: </label>
+					<label for='$boatTypeLocation'>Boat type: </label>
 					$boatTypeSelect
 				</div>
 				<div>
-					<label for='boatLength'>Boat length: </label>
-					<input type='text' name='boatLength' id='boatLength' value='" . $boat->getLength() . "'><br />
+					<label for='$boatLengthLocation'>Boat length: </label>
+					<input type='text' name='$boatLengthLocation' id='$boatLengthLocation' value='" . $boat->getLength() . "'><br />
 				</div>
 				<div>
-					<input type='submit' name='confirmEditBoat' value='Confirm'>
+					<input type='submit' name='$submitEditBoatLocation' value='Confirm'>
 				</div>
 			</fieldset>
 		";
