@@ -1,0 +1,16 @@
+Paste text below into https://www.websequencediagrams.com/
+
+title Delete member
+
+c:NavigationController->"c:MemberController": create
+
+"c:MemberController"->+"m:MemberRepository": create
+"m:MemberRepository"-->-"c:MemberController":
+
+"c:MemberController"->+"v:MemberView": create
+"v:MemberView"-->-"c:MemberController":
+
+"c:MemberController"->"m:MemberRepository":Delete(MemberView->getMemberID())
+"m:MemberRepository"-->-"c:MemberController":
+
+"c:MemberController"-->-"c:NavigationController":

@@ -1,0 +1,16 @@
+Paste text below into https://www.websequencediagrams.com/
+
+title Delete boat
+
+c:NavigationController->"c:BoatController": create
+
+"c:BoatController"->+"m:BoatRepository": create
+"m:BoatRepository"-->-"c:BoatController":
+
+"c:BoatController"->+"v:BoatView": create
+"v:BoatView"-->-"c:BoatController":
+
+"c:BoatController"->"m:BoatRepository":Delete(BoatView->getBoatID())
+"m:BoatRepository"-->-"c:BoatController":
+
+"c:BoatController"-->-"c:NavigationController":
