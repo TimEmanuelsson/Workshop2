@@ -1,0 +1,23 @@
+Paste text below into https://www.websequencediagrams.com/
+
+title Add boat
+
+"c:NavigationController"->+"c:BoatController": create
+
+"c:BoatController"->+"m:BoatRepository": create
+"m:BoatRepository"-->-"c:BoatController":
+
+"c:BoatController"->+"v:BoatView": create(MemberRepository)
+"v:BoatView"-->-"c:BoatController":
+
+"c:BoatController"->+"v:BoatView": get user input
+"v:BoatView"-->-"c:BoatController": return user input
+
+"c:BoatController"->+"m:Boat": create(user input)
+"m:Boat"->"m:Boat": validate
+"m:Boat"-->-"c:BoatController":
+
+"c:BoatController"->+"m:BoatRepository": add(boat)
+"m:BoatRepository"-->-"c:BoatController":
+
+"c:BoatController"-->-"c:NavigationController":
