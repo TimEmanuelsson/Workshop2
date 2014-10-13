@@ -1,0 +1,35 @@
+title Edit Member
+
+c:NavigationController->"c:MemberController": create
+
+"c:MemberController"->+"m:MemberRepository": create
+"m:MemberRepository"-->-"c:MemberController":
+
+"c:MemberController"->+"m:BoatRepository": create
+"m:BoatRepository"-->-"c:MemberController":
+
+"c:MemberController"->+"v:MemberView": create(MemberRepository, BoatRepository)
+"v:MemberView"-->-"c:MemberController":
+
+"c:MemberController"->+"v:MemberView": getMemberID()
+"v:MemberView"-->-"c:MemberController": return memberID
+
+"c:MemberController"-->+"m:MemberRepository": getMemberAndBoats(memberID)
+"m:MemberRepository"-->-"c:MemberController": return member
+"c:MemberController"->+"v:MemberView": showMember(member)
+"v:MemberView"-->-"c:MemberController":
+
+"c:MemberController"->+"v:MemberView":  get user input
+"v:MemberView"-->-"c:MemberController": return user input
+
+"c:MemberController"->+"m:Member": create with user input
+"m:Member"->"m:Member": validate user input
+"m:Member"-->-"c:MemberController": return member
+
+"c:MemberController"->+"m:MemberRepository": update(member)
+"m:MemberRepository"-->-"c:MemberController":
+
+"c:MemberController"->+"v:MemberView": showMember(member)
+
+"v:MemberView"-->-"c:MemberController":
+"c:MemberController"-->-"c:NavigationController":
