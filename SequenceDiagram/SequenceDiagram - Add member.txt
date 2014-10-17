@@ -1,0 +1,26 @@
+Paste text below into https://www.websequencediagrams.com/
+
+title Add member
+
+"c:NavigationController"->+"c:MemberController": create
+
+"c:MemberController"->+"m:MemberRepository": create
+"m:MemberRepository"-->-"c:MemberController":
+
+"c:MemberController"->+"v:MemberView": create(MemberRepository)
+"v:MemberView"-->-"c:MemberController":
+
+"c:MemberController"->+"v:MemberView": get user input
+"v:MemberView"-->-"c:MemberController": return user input
+
+"c:MemberController"->+"m:Member": create(user input)
+"m:Member"->"m:Member": validate
+"m:Member"-->-"c:MemberController":
+
+"c:MemberController"->+"m:MemberRepository": add(member)
+"m:MemberRepository"-->-"c:MemberController":
+
+"c:MemberController"->+"v:MemberView": show new member
+"v:MemberView"-->-"c:MemberController": return html
+
+"c:MemberController"-->-"c:NavigationController": return html

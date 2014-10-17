@@ -1,0 +1,23 @@
+Paste text below into https://www.websequencediagrams.com/
+
+title View Compact list
+
+NavigationController->":ListController": create
+
+":ListController"->+":MemberRepository": create
+":MemberRepository"-->-":ListController":
+
+":ListController"->+":BoatRepository": create
+":BoatRepository"-->-":ListController":
+
+":ListController"->+":ListView": create(MemberRepository, BoatRepository)
+":ListView"-->-":ListController":
+
+":ListController"->+":ListView":showCompactList():
+
+":ListView"->":ListView":getList():
+":ListView"->+":MemberRepository":getAllMembersAndBoats():
+":MemberRepository"-->-":ListView":
+
+":ListView"-->-":ListController":
+":ListController"-->-"NavigationController":
