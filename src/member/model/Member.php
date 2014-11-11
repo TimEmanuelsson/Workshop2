@@ -28,7 +28,7 @@ class Member
 	// Lägger till en båt till medelmmens båt-array.
 	public function addBoat(Boat $boat)
 	{
-		$this->boat[] = $boat;
+		$this->boats[] = $boat;
 	}
 	
 	// Hämtar medlemmens ID.
