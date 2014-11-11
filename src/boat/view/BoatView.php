@@ -79,7 +79,7 @@ Class BoatView
 	}
 	
 	// Visar en specifik båt.
-	public function showBoat($boat)
+	public function showBoat(Boat $boat)
 	{
 		$contentString = "
 			<h4>Boat Information</h4>
@@ -138,7 +138,7 @@ Class BoatView
 	}
 	
 	// Visar redigeringsformuläret för en specifik båt.
-	public function editBoat($boat)
+	public function editBoat(Boat $boat)
 	{
 		$errorMessage = '';
 		$boatTypes = $this->boatTypeRepository->getAllBoatTypes();

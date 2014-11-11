@@ -9,7 +9,7 @@ class Boat
 	private $length;
 	private $boatType;
 	
-	public function __construct($id, $boatTypeID, $memberID, $length, $boatType = NULL)
+	public function __construct($id, $boatTypeID, $memberID, $length, BoatType $boatType = NULL)
 	{
 		// Validerar indata.
 		$this->validateId($id);

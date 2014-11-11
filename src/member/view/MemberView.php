@@ -84,7 +84,7 @@ Class MemberView
 	}
 	
 	// Visar specifik medlem.
-	public function showMember($member)
+	public function showMember(Member $member)
 	{
 		// HTML-sträng för medlemssidan.
 		$contentString = "
@@ -126,7 +126,7 @@ Class MemberView
 	}
 	
 	// Visar redigeringsformuläret för en specifik medlem.
-	public function editMember($member)
+	public function editMember(Member $member)
 	{
 		$firstName = utf8_encode($member->getFirstName());
 		$lastName = utf8_encode($member->getLastName());
