@@ -2,9 +2,6 @@
 
 Class MemberView
 {
-
-	private $memberRepository;
-	private $boatRepository;
 	private $messages;
 	
 	// Istället för strängberoenden.
@@ -22,10 +19,8 @@ Class MemberView
 	private $deleteBoatLocation = "deleteboat";	// Finns även i boatView.php. Om ändringar sker här, ändra där med.
 	
 
-	public function __construct(MemberRepository $memberRepository, BoatRepository $boatRepository)
+	public function __construct()
 	{
-		$this->memberRepository = $memberRepository;
-		$this->boatRepository = $boatRepository;
 		$this->messages = array();
 	}
 	
