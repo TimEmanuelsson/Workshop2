@@ -13,7 +13,6 @@ class NavigationController
 	{
 		$controller;
 		
-		
 		try
 		{
 			switch (NavigationView::getAction())

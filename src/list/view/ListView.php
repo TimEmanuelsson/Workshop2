@@ -3,17 +3,15 @@
 Class ListView
 {
 	private $memberRepository;
-	private $boatRepository;
 	private $messages;
 	
 	// Istället för strängberoenden
 	private $detailedListLocation = "detailedlist";
 	private $compactListLocation = "compactlist";
 	
-	public function __construct(MemberRepository $memberRepository, BoatRepository $boatRepository)
+	public function __construct(MemberRepository $memberRepository)
 	{
 		$this->memberRepository = $memberRepository;
-		$this->boatRepository = $boatRepository;
 		$this->messages = array();
 	}
 	

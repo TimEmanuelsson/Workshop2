@@ -2,8 +2,10 @@
 
 
 class HTMLView {
-	public function echoHTML($body) {
-		if($body == NULL){
+	public function echoHTML($body)
+	{
+		if($body == NULL)
+		{
 			$body = "An unknown error has occured!<br />
 			<a href='?compactlist'>Click here to return to start page</a>";
 		}

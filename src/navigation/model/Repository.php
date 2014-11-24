@@ -6,8 +6,10 @@ abstract class Repository {
 	protected $dbConnstring = 'mysql:host=localhost;dbname=dannberger_com';
 	protected $dbConnection;
 	
-	protected function connection() {
-		if ($this->dbConnection == NULL) {
+	protected function connection()
+	{
+		if ($this->dbConnection == NULL)
+		{
 			$this->dbConnection = new PDO($this->dbConnstring, $this->dbUsername, $this->dbPassword);
 		}
 		
