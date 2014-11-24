@@ -18,6 +18,12 @@ Class MemberController
 		$this->memberView = new MemberView($this->memberRepository, $this->boatRepository);
 	}
 	
+	public function getMember() {
+		$memberID = $this->memberView->getMemberID();
+		$member = $this->memberRepository->getMemberAndBoats($memberID);
+		return $member;
+	}
+	
 	public function memberControl($operationSuccess = FALSE)
 	{
 		// Sätter ett rättmeddelande ifall en handling lyckats.

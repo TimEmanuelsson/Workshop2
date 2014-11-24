@@ -47,9 +47,11 @@ class NavigationController
 					break;
 					
 				case NavigationView::$actionBoat:
+					$memberController = new MemberController();
+					$member = $memberController->getMember();
 					
 					$controller = new BoatController();
-					$result = $controller->boatControl();
+					$result = $controller->boatControl($member);
 					if($result === self::$operationSuccess) {
 						$controller = new MemberController();
 						return $controller->memberControl(self::$operationSuccess);
@@ -58,9 +60,11 @@ class NavigationController
 					break;
 					
 				case NavigationView::$actionAddBoat:
+					$memberController = new MemberController();
+					$member = $memberController->getMember();
 					
 					$controller = new BoatController();
-					$result = $controller->boatControl();
+					$result = $controller->boatControl($member);
 					if($result === self::$operationSuccess) {
 						$controller = new MemberController();
 						return $controller->memberControl(self::$operationSuccess);

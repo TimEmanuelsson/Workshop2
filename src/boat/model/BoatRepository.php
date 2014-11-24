@@ -22,14 +22,14 @@ class BoatRepository extends Repository
 	}
 	
 	// Lägger till en ny båt i databasen.
-	public function add(Boat $boat)
+	public function add(Boat $boat, Member $member)
 	{
 		try
 		{
 			$db = $this -> connection();
 
 			$sql = "INSERT INTO " . self::$dbTable . " (" . self::$boatTypeID . ", " . self::$memberID . ", " . self::$length . ") VALUES (?, ?, ?)";
-			$params = array($boat -> getBoatTypeID(), $boat -> getMemberID(), $boat -> getLength());
+			$params = array($boat -> getBoatTypeID(), $member -> getID(), $boat -> getLength());
 
 			$query = $db -> prepare($sql);
 			$query -> execute($params);
@@ -62,14 +62,14 @@ class BoatRepository extends Repository
 	}
 	
 	// Uppdaterar en specifik båt.
-	public function update(Boat $boat)
+	public function update(Boat $boat, Member $member)
 	{
 		try
 		{
 			$db = $this -> connection();
 
 			$sql = "UPDATE " . self::$dbTable . " SET " . self::$boatTypeID . "=?, " . self::$memberID . "=?, " . self::$length . "=? WHERE " . self::$id ."=?";
-			$params = array($boat -> getBoatTypeID(), $boat -> getMemberID(), $boat -> getLength(), $boat -> getID());
+			$params = array($boat -> getBoatTypeID(), $member -> getID(), $boat -> getLength(), $boat -> getID());
 
 			$query = $db -> prepare($sql);
 			$query -> execute($params);
@@ -97,7 +97,7 @@ class BoatRepository extends Repository
 		foreach($result as $boat)
 		{
 			$boatType = $this->boatTypeRepository->getBoatTypeByID($boat[self::$boatTypeID]);
-			$bt = new Boat($boat[self::$id], $boat[self::$boatTypeID], $boat[self::$memberID], $boat[self::$length], $boatType);
+			$bt = new Boat($boat[self::$id], $boat[self::$boatTypeID], $boat[self::$length], $boatType);
 			$boats[] = $bt;
 		}
 		
@@ -118,7 +118,7 @@ class BoatRepository extends Repository
 		$result = $query -> fetch();
 		
 		$boatType = $this->boatTypeRepository->getBoatTypeByID($boatID);
-		$boat = new Boat($result[self::$id], $result[self::$boatTypeID], $result[self::$memberID], $result[self::$length], $boatType);
+		$boat = new Boat($result[self::$id], $result[self::$boatTypeID], $result[self::$length], $boatType);
 		
 		return $boat;
 	}

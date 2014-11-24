@@ -5,22 +5,19 @@ class Boat
 {
 	private $id;
 	private $boatTypeID;
-	private $memberID;
 	private $length;
 	private $boatType;
 	
-	public function __construct($id, $boatTypeID, $memberID, $length, BoatType $boatType = NULL)
+	public function __construct($id, $boatTypeID, $length, BoatType $boatType = NULL)
 	{
 		// Validerar indata.
 		$this->validateId($id);
 		$this->validateId($boatTypeID);
-		$this->validateId($memberID);
 		$this->validateLength($length);
 		
 		// Sätter värdet på de privata variablerna.
 		$this->id = $id;
 		$this->boatTypeID = $boatTypeID;
-		$this->memberID = $memberID;
 		$this->length = $length;
 		
 		if($boatType != NULL)
@@ -39,12 +36,6 @@ class Boat
 	public function getBoatTypeID()
 	{
 		return $this->boatTypeID;
-	}
-	
-	// Hämtar medlemsID:t.
-	public function getMemberID()
-	{
-		return $this->memberID;
 	}
 	
 	// Hämtar båtens längd.

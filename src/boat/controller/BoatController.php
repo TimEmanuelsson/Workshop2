@@ -2,6 +2,7 @@
 
 require_once ('./src/boat/view/BoatView.php');
 require_once('./src/boat/model/BoatRepository.php');
+require_once('./src/member/model/Member.php');
 
 Class BoatController
 {
@@ -15,7 +16,7 @@ Class BoatController
 		$this->boatView = new boatView();
 	}
 
-	public function boatControl()
+	public function boatControl(Member $member = null)
 	{
 		// Har användaren klickat på submit i "Add"-formuläret...
 		if($this->boatView->didUserSubmitAddForm())
@@ -23,8 +24,8 @@ Class BoatController
 			try
 			{
 				// Skapar ett nytt båtsobjekt med användarinput & lägger till det i databasen.
-				$newBoat = new Boat(0, $this->boatView->getBoatType(), $this->boatView->getMemberID(), $this->boatView->getLength());
-				$boat = $this->boatRepository->add($newBoat);
+				$newBoat = new Boat(0, $this->boatView->getBoatType(), $this->boatView->getLength());
+				$boat = $this->boatRepository->add($newBoat, $member);
 				return TRUE;
 			}
 			catch(Exception $e)
@@ -69,8 +70,8 @@ Class BoatController
 				try
 				{
 					// Skapar ett nytt båtobjekt med användarinput & uppdaterar befintlig båt i databasen.
-					$newBoat = new Boat($this->boatView->getBoatID(), $this->boatView->getBoatType(), $this->boatView->getMemberID(), $this->boatView->getLength());
-					$this->boatRepository->update($newBoat);
+					$newBoat = new Boat($this->boatView->getBoatID(), $this->boatView->getBoatType(), $this->boatView->getLength());
+					$this->boatRepository->update($newBoat, $member);
 					return TRUE;
 				}
 				catch(Exception $e)

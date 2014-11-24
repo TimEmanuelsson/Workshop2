@@ -9,7 +9,7 @@ class Member
 	private $identityNumber;
 	private $boats;
 	
-	public function __construct($id, $firstName, $lastName, $identityNumber, $boats = NULL)
+	public function __construct($id, $firstName, $lastName, $identityNumber, Array $boats = NULL)
 	{
 		// Validerar indata.
 		$this->validateId($id);
